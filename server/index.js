@@ -5,6 +5,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const jwt = require('jsonwebtoken')
+const { restart } = require('nodemon')
 
 const port = process.env.PORT || 8000
 
@@ -47,6 +48,15 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+
+    const roomsCollection = client.db('staySafe').collection('rooms')
+
+    // Get all rooms from DB
+    app.get('/rooms', async(req, res)=>{
+      const result = await roomsCollection.find().toArray()
+      res.send(result)
+    })
+
     // auth related api
     app.post('/jwt', async (req, res) => {
       const user = req.body

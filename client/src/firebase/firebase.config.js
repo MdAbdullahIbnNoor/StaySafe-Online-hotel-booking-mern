@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app'
+import { initializeApp } from 'firebase/app' 
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_apiKey,
@@ -8,5 +8,7 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_messagingSenderId,
   appId: import.meta.env.VITE_appId,
 }
+
+// console.log(import.meta.env.VITE_apiKey);
 
 export const app = initializeApp(firebaseConfig)
