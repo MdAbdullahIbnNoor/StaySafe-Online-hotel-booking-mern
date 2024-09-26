@@ -412,5 +412,240 @@
     },
     "description": "This property is a skier's dream! Enjoy rustic luxury with direct slope access in the heart of the mountains.",
     "image": "https://i.ibb.co.com/2FvzJcN/martin-robles-Qt-Hz-R4-CN1k-Q-unsplash.jpg"
+  },
+  {
+    "location": "London, UK",
+    "category": "Castles",
+    "title": "Historic Castle in the Heart of London",
+    "to": "2024-12-15T18:00:00.000Z",
+    "from": "2024-12-10T18:00:00.000Z",
+    "price": 1200,
+    "guests": 10,
+    "bathrooms": 4,
+    "bedrooms": 5,
+    "host": {
+      "name": "Oliver King",
+      "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+      "email": "oliver.king@mail.com"
+    },
+    "description": "Stay in a magnificent castle with breathtaking views and royal history. Enjoy grand rooms and a vast private garden.",
+    "image": "https://i.ibb.co.com/R62qpTX/john-cameron-RKgd-Ou-Nz-Y0-unsplash.jpg"
+  },
+  {
+    "location": "Barcelona, Spain",
+    "category": "Modern",
+    "title": "Luxury Apartment in the City Center",
+    "to": "2024-10-10T18:00:00.000Z",
+    "from": "2024-10-05T18:00:00.000Z",
+    "price": 450,
+    "guests": 2,
+    "bathrooms": 1,
+    "bedrooms": 1,
+    "host": {
+      "name": "Carlos Ruiz",
+      "image": "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg",
+      "email": "carlos.ruiz@mail.com"
+    },
+    "description": "A modern apartment with a chic design in the heart of Barcelona. Perfect for a city getaway.",
+    "image": "https://i.ibb.co.com/7y915Z9/quynh-do-T7o-MZ5-H4-Zt4-unsplash.jpg"
+  },
+  {
+    "location": "Maui, Hawaii",
+    "category": "Beach",
+    "title": "Oceanfront Villa with Private Beach",
+    "to": "2024-09-30T18:00:00.000Z",
+    "from": "2024-09-25T18:00:00.000Z",
+    "price": 800,
+    "guests": 6,
+    "bathrooms": 3,
+    "bedrooms": 3,
+    "host": {
+      "name": "Leilani Kai",
+      "image": "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg",
+      "email": "leilani.kai@mail.com"
+    },
+    "description": "A serene oceanfront villa with access to a private beach. Perfect for families looking to relax by the water.",
+    "image": "https://i.ibb.co.com/1XDFb7P/hotel-with-swimmingpool.jpg"
+  },
+  {
+    "location": "Tuscany, Italy",
+    "category": "Countryside",
+    "title": "Rustic Farmhouse in the Tuscan Hills",
+    "to": "2024-10-20T18:00:00.000Z",
+    "from": "2024-10-15T18:00:00.000Z",
+    "price": 500,
+    "guests": 5,
+    "bathrooms": 2,
+    "bedrooms": 3,
+    "host": {
+      "name": "Giovanni Rossi",
+      "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+      "email": "giovanni.rossi@mail.com"
+    },
+    "description": "Stay in a traditional farmhouse surrounded by vineyards and olive trees. A perfect escape to the countryside.",
+    "image": "https://i.ibb.co.com/g3RW592/orva-studio-YC8qqp50-Bd-A-unsplash.jpg"
+  },
+  {
+    "location": "Aspen, USA",
+    "category": "Skiing",
+    "title": "Ski Chalet with Mountain Views",
+    "to": "2024-12-05T18:00:00.000Z",
+    "from": "2024-12-01T18:00:00.000Z",
+    "price": 700,
+    "guests": 8,
+    "bathrooms": 3,
+    "bedrooms": 4,
+    "host": {
+      "name": "Jake Winters",
+      "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+      "email": "jake.winters@mail.com"
+    },
+    "description": "Luxury ski chalet located in the heart of Aspen with panoramic mountain views. Ski-in and ski-out access.",
+    "image": "https://i.ibb.co.com/fXqg1gZ/hotel-room3.jpg"
+  },
+  {
+    "location": "Kyoto, Japan",
+    "category": "Traditional",
+    "title": "Zen Garden Villa with Tatami Rooms",
+    "to": "2024-11-10T18:00:00.000Z",
+    "from": "2024-11-05T18:00:00.000Z",
+    "price": 550,
+    "guests": 4,
+    "bathrooms": 2,
+    "bedrooms": 2,
+    "host": {
+      "name": "Akira Sato",
+      "image": "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg",
+      "email": "akira.sato@mail.com"
+    },
+    "description": "This property has traditional Japanese architecture! Relax in a Zen-inspired villa with tatami rooms and a private garden.",
+    "image": "https://i.ibb.co.com/hZVQ3Kn/thepowercouple-c3h-DGTFUB6g-unsplash.jpg"
+  },
+  {
+    "location": "Banff, Canada",
+    "category": "Arctic",
+    "title": "Snowy Cabin in the Rocky Mountains",
+    "to": "2024-01-10T18:00:00.000Z",
+    "from": "2024-01-05T18:00:00.000Z",
+    "price": 600,
+    "guests": 6,
+    "bathrooms": 3,
+    "bedrooms": 3,
+    "host": {
+      "name": "Liam Carter",
+      "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+      "email": "liam.carter@mail.com"
+    },
+    "description": "Cozy cabin in the Canadian Rockies with a fireplace and snowy views. Perfect for a winter getaway.",
+    "image": "https://i.ibb.co.com/LSDtQHz/arctic-hotel-image.jpg"
+  },
+  {
+    "location": "Grand Canyon, USA",
+    "category": "Caves",
+    "title": "Underground Cave Suite",
+    "to": "2024-11-25T18:00:00.000Z",
+    "from": "2024-11-20T18:00:00.000Z",
+    "price": 500,
+    "guests": 4,
+    "bathrooms": 1,
+    "bedrooms": 2,
+    "host": {
+      "name": "Mason Turner",
+      "image": "https://i.ibb.co.com/QHtwf7B/christopher-sardegna-CMOa3-H1-SXG0-unsplash.jpg",
+      "email": "mason.turner@mail.com"
+    },
+    "description": "Unique cave suite carved into the rocks of the Grand Canyon. Experience a one-of-a-kind stay underground.",
+    "image": "https://i.ibb.co.com/bghQngs/stephen-njau-Oimp-S73x-L3c-unsplash.jpg"
+  },
+  {
+    "location": "Joshua Tree, USA",
+    "category": "Camping",
+    "title": "Luxury Camping in the Desert",
+    "to": "2024-11-30T18:00:00.000Z",
+    "from": "2024-11-25T18:00:00.000Z",
+    "price": 400,
+    "guests": 3,
+    "bathrooms": 1,
+    "bedrooms": 1,
+    "host": {
+      "name": "Sophie West",
+      "image": "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg",
+      "email": "sophie.west@mail.com"
+    },
+   
+    "description": "Enjoy a luxury camping experience in the beautiful Joshua Tree desert. Perfect for stargazing and nature walks.",
+    "image": "https://i.ibb.co.com/8gtfs6D/fransiskus-filbert-mangundap-l8-OKl-H71-Xh0-unsplash.jpg"
+  },
+  {
+    "location": "Bali, Indonesia",
+    "category": "Island",
+    "title": "Beachfront Villa with Infinity Pool",
+    "to": "2024-12-20T18:00:00.000Z",
+    "from": "2024-12-15T18:00:00.000Z",
+    "price": 900,
+    "guests": 8,
+    "bathrooms": 4,
+    "bedrooms": 5,
+    "host": {
+      "name": "Putri Santoso",
+      "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+      "email": "putri.santoso@mail.com"
+    },
+    "description": "Luxury beachfront villa with a private infinity pool overlooking the ocean. Perfect for large groups or families.",
+    "image": "https://i.ibb.co.com/sZVY8k6/modern-hotel1.jpg"
+  },
+  {
+    "location": "Beverly Hills, USA",
+    "category": "Lux",
+    "title": "Hollywood Luxury Mansion",
+    "to": "2024-12-30T18:00:00.000Z",
+    "from": "2024-12-25T18:00:00.000Z",
+    "price": 5000,
+    "guests": 10,
+    "bathrooms": 6,
+    "bedrooms": 5,
+    "host": {
+      "name": "Jessica Williams",
+      "image": "https://i.ibb.co.com/ZzHzTVF/new-woman.jpg",
+      "email": "jessica.williams@mail.com"
+    },
+    "description": "Indulge in a Hollywood-style mansion in the heart of Beverly Hills. This property boasts a private pool, gym, and luxurious interiors perfect for celebrities.",
+    "image": "https://i.ibb.co.com/mXh1JdV/luxury-mansion.jpg"
+  },
+  {
+    "location": "Monaco, Monte Carlo",
+    "category": "Lux",
+    "title": "Sea View Luxury Hotel Suite",
+    "to": "2024-11-20T18:00:00.000Z",
+    "from": "2024-11-15T18:00:00.000Z",
+    "price": 4500,
+    "guests": 4,
+    "bathrooms": 2,
+    "bedrooms": 2,
+    "host": {
+      "name": "Daniel Martinez",
+      "image": "https://i.ibb.co.com/FbdyHNP/new-man2.jpg",
+      "email": "daniel.martinez@mail.com"
+    },
+    "description": "A luxury suite in Monte Carlo with stunning sea views and modern amenities. Enjoy the best of Monaco with access to a private beach and 5-star service.",
+    "image": "https://i.ibb.co.com/ZBryZPv/luxury-hotel.jpg"
+  },
+  {
+    "location": "Los Angeles, USA",
+    "category": "Lux",
+    "title": "Private Luxury Home with Pool",
+    "to": "2024-10-31T18:00:00.000Z",
+    "from": "2024-10-25T18:00:00.000Z",
+    "price": 4200,
+    "guests": 6,
+    "bathrooms": 3,
+    "bedrooms": 3,
+    "host": {
+      "name": "James Thompson",
+      "image": "https://i.ibb.co.com/RYpzTf4/new-man.jpg",
+      "email": "james.thompson@mail.com"
+    },
+    "description": "Luxury private home in Los Angeles with a large outdoor pool and modern interiors. The perfect spot for a high-end vacation or private retreat.",
+    "image": "https://i.ibb.co.com/XF01nvP/luxury-home.jpg"
   }
-]
+  ]

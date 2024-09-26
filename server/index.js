@@ -51,9 +51,40 @@ async function run() {
 
     const roomsCollection = client.db('staySafe').collection('rooms')
 
-    // Get all rooms from DB
-    app.get('/rooms', async(req, res)=>{
-      const result = await roomsCollection.find().toArray()
+    // Get all rooms with pagination
+    app.get('/rooms', async (req, res) => {
+      const category = req.query.category
+      const page = parseInt(req.query.page) || 1  // Current page number (default: 1)
+      const limit = parseInt(req.query.limit) || 10  // Number of rooms per page (default: 10)
+      const skip = (page - 1) * limit  // Skip this many documents
+
+      let query = {}
+      if (category && category !== 'null') query = { category }
+
+      console.log(`Page: ${page}, Limit: ${limit}, Category: ${category}`)
+
+      const totalRooms = await roomsCollection.countDocuments(query)
+      const rooms = await roomsCollection.find(query)
+                                      .skip(skip)
+                                      .limit(limit)
+                                      .toArray()
+
+      console.log(`Total Rooms: ${totalRooms}, Rooms returned: ${rooms.length}`)
+      
+      res.send({
+        totalRooms,
+        rooms,
+        totalPages: Math.ceil(totalRooms / limit),
+        currentPage: page
+      })
+    })
+
+
+    // Get room details by ID
+    app.get('/room/:id', async(req, res)=>{
+      const id = req.params.id
+      const query = {_id: new ObjectId(id)}
+      const result = await roomsCollection.findOne(query)
       res.send(result)
     })
 

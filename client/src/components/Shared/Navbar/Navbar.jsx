@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import avatarImg from '../../../assets/images/placeholder.jpg'
+import logo from '../../../assets/images/logo.png'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
@@ -18,7 +19,7 @@ const Navbar = () => {
             <Link to='/'>
               <img
                 // className='hidden md:block'
-                src='https://i.ibb.co/4ZXzmq5/logo.png'
+                src={logo}
                 alt='logo'
                 width='100'
                 height='100'
