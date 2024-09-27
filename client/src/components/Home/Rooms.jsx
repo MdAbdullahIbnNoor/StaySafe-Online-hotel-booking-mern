@@ -40,7 +40,7 @@ const Rooms = () => {
           </div>
 
           {/* Pagination Buttons */}
-          <div className='flex justify-center my-6 mt-8'>
+          <div className='flex justify-center my-6 mt-32'>
             <button
               disabled={page === 1}
               onClick={() => setPage(page - 1)}

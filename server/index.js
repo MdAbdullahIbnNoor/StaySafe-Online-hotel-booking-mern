@@ -61,7 +61,7 @@ async function run() {
       let query = {}
       if (category && category !== 'null') query = { category }
 
-      console.log(`Page: ${page}, Limit: ${limit}, Category: ${category}`)
+      // console.log(`Page: ${page}, Limit: ${limit}, Category: ${category}`)
 
       const totalRooms = await roomsCollection.countDocuments(query)
       const rooms = await roomsCollection.find(query)
