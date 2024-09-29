@@ -14,6 +14,6 @@ const PrivateRoute = ({ children }) => {
 
 PrivateRoute.propTypes = {
   children: PropTypes.element,
-}
+} 
 
 export default PrivateRoute

@@ -21,7 +21,7 @@ const Navbar = () => {
                 // className='hidden md:block'
                 src={logo}
                 alt='logo'
-                width='100'
+                width='150'
                 height='100'
               />
             </Link>
@@ -70,6 +70,12 @@ const Navbar = () => {
 
                     {user ? (
                       <>
+                        <Link
+                          to='/dashboard'
+                          className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
+                        >
+                          Dashboard
+                        </Link>
                         <div
                           onClick={logOut}
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'

@@ -69,7 +69,7 @@ async function run() {
                                       .limit(limit)
                                       .toArray()
 
-      console.log(`Total Rooms: ${totalRooms}, Rooms returned: ${rooms.length}`)
+      // console.log(`Total Rooms: ${totalRooms}, Rooms returned: ${rooms.length}`)
       
       res.send({
         totalRooms,
