@@ -79,6 +79,13 @@ async function run() {
       })
     })
 
+    // Save room in DB
+    app.post('/room', async(req, res)=>{
+      const roomData = req.body
+      const result = await roomsCollection.insertOne(roomData)
+      res.send(result);
+    })
+
 
     // Get room details by ID
     app.get('/room/:id', async(req, res)=>{

@@ -92,7 +92,7 @@ const AddRoomForm = ({ dates, handleDates, handleSubmit, setImagePreview, imageP
                                     </label>
                                 </div>
                             </div>
-                            <div className='w-28 h-20 object-center overflow-hidden flex items-center border-2 rounded-md p-2 border-rose-500 border-dotted'>
+                            <div className='w-28 h-20 object-center overflow-hidden flex items-center'>
                                 {imagePreview && <img src={imagePreview} />}
                             </div>
                         </div>
