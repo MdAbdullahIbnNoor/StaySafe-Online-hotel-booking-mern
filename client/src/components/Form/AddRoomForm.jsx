@@ -1,7 +1,7 @@
 import { categories } from '../Categories/CategoriesData'
 import { DateRange } from 'react-date-range';
-const AddRoomForm = ({dates, handleDates, handleSubmit, setImagePreview}) => {
-    
+const AddRoomForm = ({ dates, handleDates, handleSubmit, setImagePreview, imagePreview, handleImage, imageText }) => {
+
     return (
         <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
             <form onSubmit={handleSubmit}>
@@ -27,7 +27,7 @@ const AddRoomForm = ({dates, handleDates, handleSubmit, setImagePreview}) => {
                             </label>
                             <select
                                 required
-                                className='w-full px-4 py-3 border-rose-300 focus:outline-rose-500 rounded-md'
+                                className='w-full px-4 py-3 border-rose-400 focus:outline-rose-500 rounded-md'
                                 name='category'
                             >
                                 {categories.map(category => (
@@ -68,24 +68,32 @@ const AddRoomForm = ({dates, handleDates, handleSubmit, setImagePreview}) => {
                             />
                         </div>
 
-                        <div className=' p-4 bg-white w-full  m-auto rounded-lg'>
-                            <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
-                                <div className='flex flex-col w-max mx-auto text-center'>
+                        <div className='p-4 bg-white w-full m-auto rounded-lg flex content-center gap-4'>
+                            <div className='file_upload px-5 py-1 relative border-4 border-dotted border-gray-300 rounded-lg flex-1 flex items-center justify-center'>
+                                <div className='flex flex-col w-max mx-auto my-auto text-center'>
                                     <label>
                                         <input
                                             className='text-sm cursor-pointer w-36 hidden'
                                             type='file'
                                             name='image'
                                             id='image'
-                                            onChange={e => setImagePreview(URL.createObjectURL(e.target.files[0]))}
+                                            onChange={e => handleImage(e.target.files[0])}
                                             accept='image/*'
                                             hidden
                                         />
                                         <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
-                                            Upload Image
+                                            {
+                                                imageText.length > 20
+                                                    ? imageText.split('.')[0].slice(0, 15) + '.-.-.' + imageText.split('.')[1]
+                                                    : imageText
+                                            }
                                         </div>
+
                                     </label>
                                 </div>
+                            </div>
+                            <div className='w-28 h-20 object-center overflow-hidden flex items-center border-2 rounded-md p-2 border-rose-500 border-dotted'>
+                                {imagePreview && <img src={imagePreview} />}
                             </div>
                         </div>
                         <div className='flex justify-between gap-2'>

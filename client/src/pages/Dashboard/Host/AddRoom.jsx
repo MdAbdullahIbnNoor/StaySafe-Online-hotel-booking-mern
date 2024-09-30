@@ -6,7 +6,7 @@ import { imageUpload } from '../../../api/utils'
 const AddRoom = () => {
     const { user } = useAuth()
     const [imagePreview, setImagePreview] = useState()
-    const [imageText, setImageTest] = useState('Upload Image')
+    const [imageText, setImageText] = useState('Upload Image')
     const [dates, setDates] = useState({
         startDate: new Date(),
         endDate: null,
@@ -53,15 +53,22 @@ const AddRoom = () => {
 
     }
 
+    // handle image change
+    const handleImage = image => {
+        setImagePreview(URL.createObjectURL(image))
+        setImageText(image.name)
+    }
+
     return (
-        <div>
-            <h1>My Add Room Page...</h1>
-            <div className='h-16 w-16'>
-                {imagePreview && <img src={imagePreview} />}
-            </div>
-            {/* Render Form */}
-            <AddRoomForm dates={dates} handleDates={handleDates} handleSubmit={handleSubmit} setImagePreview={setImagePreview} />
-        </div>
+        <AddRoomForm
+            dates={dates}
+            handleDates={handleDates}
+            handleSubmit={handleSubmit}
+            setImagePreview={setImagePreview}
+            imagePreview={imagePreview}
+            handleImage={handleImage}
+            imageText={imageText}
+        />
     )
 }
 
