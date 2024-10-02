@@ -50,37 +50,46 @@ async function run() {
   try {
 
     const roomsCollection = client.db('staySafe').collection('rooms')
+    const usersCollection = client.db('staySafe').collection('users')
+
+    // ----------------------------------------------------------room related apis--------------------------------------------------------------
 
     // Get all rooms with pagination
     app.get('/rooms', async (req, res) => {
-      const category = req.query.category
-      const page = parseInt(req.query.page) || 1  // Current page number (default: 1)
-      const limit = parseInt(req.query.limit) || 10  // Number of rooms per page (default: 10)
-      const skip = (page - 1) * limit  // Skip this many documents
+      const category = req.query.category;
+      const page = parseInt(req.query.page) || 1; // Current page number (default: 1)
+      const limit = parseInt(req.query.limit) || 10; // Number of rooms per page (default: 10)
+      const skip = (page - 1) * limit; // Skip this many documents
 
-      let query = {}
-      if (category && category !== 'null') query = { category }
+      let query = {};
+      if (category && category !== 'null') query = { category };
 
-      // console.log(`Page: ${page}, Limit: ${limit}, Category: ${category}`)
+      // Get the total count of rooms for pagination
+      const totalRooms = await roomsCollection.countDocuments(query);
 
-      const totalRooms = await roomsCollection.countDocuments(query)
+      // Fetch rooms with sorting by 'createdAt' field (latest first)
       const rooms = await roomsCollection.find(query)
-                                      .skip(skip)
-                                      .limit(limit)
-                                      .toArray()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .toArray();
 
-      // console.log(`Total Rooms: ${totalRooms}, Rooms returned: ${rooms.length}`)
-      
       res.send({
         totalRooms,
         rooms,
         totalPages: Math.ceil(totalRooms / limit),
-        currentPage: page
-      })
+        currentPage: page,
+      });
+    });
+
+
+    app.get('/all-rooms', async (req, res) => {
+      const result = await roomsCollection.find().toArray()
+      res.send(result)
     })
 
     // Save room in DB
-    app.post('/room', async(req, res)=>{
+    app.post('/room', async (req, res) => {
       const roomData = req.body
       const result = await roomsCollection.insertOne(roomData)
       res.send(result);
@@ -88,10 +97,71 @@ async function run() {
 
 
     // Get room details by ID
-    app.get('/room/:id', async(req, res)=>{
+    app.get('/room/:id', async (req, res) => {
       const id = req.params.id
-      const query = {_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) }
       const result = await roomsCollection.findOne(query)
+      res.send(result)
+    })
+
+    app.get('/my-listings/:email', async (req, res) => {
+      const email = req.params.email
+      const query = { 'host.email': email }
+      const result = await roomsCollection.find(query).toArray()
+      res.send(result)
+    })
+
+    // Delete room with id
+    app.delete('/room/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) }
+      const result = await roomsCollection.deleteOne(query)
+      res.send(result)
+    })
+
+    // ------------------------------------------------------------users related api----------------------------------------------
+
+    // save user data in db
+    app.put('/user', async (req, res) => {
+      const user = req.body
+      const query = { email: user?.email }
+
+      // Check if the user is in DB
+      const isExist = await usersCollection.findOne({ email: user?.email })
+
+      if (isExist) {
+        if (user.status === 'Requested') {
+          const result = await usersCollection.updateOne(query, {
+            $set: { status: user?.status },
+          })
+          return res.send(result)
+        } else {
+          return res.send(isExist);
+        }
+      }
+
+      const options = { upsert: true }
+      const updateDoc = {
+        $set: {
+          ...user,
+          timestamp: Date.now(),
+        },
+      }
+      const result = await usersCollection.updateOne(query, updateDoc, options)
+      res.send(result)
+    })
+
+    // get all the users data
+    app.get('/users', async (req, res) => {
+      const result = await usersCollection.find().toArray()
+      res.send(result)
+    })
+
+    // get specific user data by email
+    app.get('/user/:email', async (req, res) => {
+      const email = req.params.email
+      const query = { email: email }
+      const result = await usersCollection.findOne(query)
       res.send(result)
     })
 

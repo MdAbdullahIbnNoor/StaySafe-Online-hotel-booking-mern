@@ -5,10 +5,54 @@ import { Link } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import avatarImg from '../../../assets/images/placeholder.jpg'
 import logo from '../../../assets/images/logo.png'
+import HostModal from '../../Modals/HostModal'
+import useAxiosSecure from './../../../hooks/useAxiosSecure'
+import { useMutation } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
+  const axiosSecure = useAxiosSecure()
   const { user, logOut } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+
+  // for Modal
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const {mutateAsync} = useMutation({
+    mutationFn: async currentUser => {
+      const {data} = await axiosSecure.put(
+        `/user`, currentUser
+      )
+      return data
+    },
+    onSuccess: () => {
+      toast.success('Request send successfully')
+      closeModal()
+    },
+  })
+
+  const handleModal = async () => {
+    const currentUser = {
+      email: user?.email,
+      role: 'guest',
+      status: 'Requested',
+    }
+
+    // const { data } = await axiosSecure.put(
+    //   `${import.meta.env.VITE_API_URL}/user`, currentUser
+    // )
+    // return data
+    try {
+      await mutateAsync(currentUser)
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  }
 
   return (
     <div className='fixed w-full bg-white z-10 shadow-sm'>
@@ -30,8 +74,9 @@ const Navbar = () => {
               <div className='flex flex-row items-center gap-3'>
                 {/* Become A Host btn */}
                 <div className='hidden md:block'>
-                  {!user && (
+                  {user && (
                     <button
+                      onClick={() => setIsModalOpen(true)}
                       disabled={!user}
                       className='disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'
                     >
@@ -39,6 +84,8 @@ const Navbar = () => {
                     </button>
                   )}
                 </div>
+                {/* Modal */}
+                <HostModal isModalOpen={isModalOpen} closeModal={closeModal} handleModal={handleModal}/>
                 {/* Dropdown btn */}
                 <div
                   onClick={() => setIsOpen(!isOpen)}

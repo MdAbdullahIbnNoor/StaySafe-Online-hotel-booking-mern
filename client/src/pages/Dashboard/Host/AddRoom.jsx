@@ -5,10 +5,14 @@ import { imageUpload } from '../../../api/utils'
 import { Helmet } from 'react-helmet-async'
 import { useMutation } from '@tanstack/react-query'
 import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const AddRoom = () => {
     const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate()
     const { user } = useAuth()
+    const [loading, setLoading] = useState(false)
     const [imagePreview, setImagePreview] = useState()
     const [imageText, setImageText] = useState('Upload Image')
     const [dates, setDates] = useState({
@@ -28,14 +32,18 @@ const AddRoom = () => {
             const { data } = await axiosSecure.post(`/room`, roomData)
             return data
         },
-        onSuccess: () =>{
-            console.log("Content Saved Successfully");
+        onSuccess: () => {
+            console.log("Content Saved Successfully")
+            toast.success('Room added successfully!!')
+            navigate('/dashboard/my-listings')
+            setLoading(false)
         },
     })
 
     // Form Handler
     const handleSubmit = async e => {
         e.preventDefault()
+        setLoading(true)
         const form = e.target
         const location = form.location.value
         const category = form.category.value
@@ -57,6 +65,10 @@ const AddRoom = () => {
         try {
             const image_url = await imageUpload(image)
 
+            if (!image_url) {
+                throw new Error('Image upload failed');
+            }
+
             const roomData = {
                 location,
                 category,
@@ -64,7 +76,7 @@ const AddRoom = () => {
                 to,
                 from,
                 price,
-                guest,
+                guests,
                 bathrooms,
                 description,
                 bedrooms,
@@ -73,9 +85,13 @@ const AddRoom = () => {
             }
 
             await mutateAsync(roomData)
+            console.log(roomData);
+
 
         } catch (err) {
             console.log(err);
+            toast.error(err.message)
+            setLoading(false)
         }
 
     }
@@ -95,10 +111,10 @@ const AddRoom = () => {
                 dates={dates}
                 handleDates={handleDates}
                 handleSubmit={handleSubmit}
-                setImagePreview={setImagePreview}
                 imagePreview={imagePreview}
                 handleImage={handleImage}
                 imageText={imageText}
+                loading={loading}
             />
         </>
     )

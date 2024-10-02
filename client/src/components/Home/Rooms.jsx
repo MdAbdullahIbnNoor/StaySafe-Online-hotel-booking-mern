@@ -9,12 +9,12 @@ import { useSearchParams } from 'react-router-dom';
 
 const Rooms = () => {
   const axiosCommon = useAxiosCommon();
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const category = params.get('category');
 
   // Pagination state
   const [page, setPage] = useState(1);
-  const limit = 10;  // Fixed limit of 10 rooms per page
+  const limit = 10; // Fixed limit of 10 rooms per page
 
   const { data: roomsData = {}, isLoading } = useQuery({
     queryKey: ['rooms', category, page],
@@ -22,7 +22,7 @@ const Rooms = () => {
       const { data } = await axiosCommon.get(`/rooms?category=${category}&page=${page}&limit=${limit}`);
       return data;
     },
-    keepPreviousData: true,  // Helps to keep the previous data while fetching new data
+    keepPreviousData: true, // Keeps previous data during loading
   });
 
   if (isLoading) return <LoadingSpinner />;
@@ -39,23 +39,39 @@ const Rooms = () => {
             ))}
           </div>
 
-          {/* Pagination Buttons */}
-          <div className='flex justify-center my-6 mt-32'>
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-              className='px-5 py-2 mr-4 bg-rose-600 text-neutral-200 rounded-s-full'
-            >
-              Previous
-            </button>
-            <button
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-              className='px-8 py-2 mx-4 bg-rose-600 text-neutral-200 rounded-e-full'
-            >
-              Next
-            </button>
-          </div>
+          {/* Pagination Section */}
+          {totalPages > 1 && (
+            <div className='flex justify-center my-6 mt-32'>
+              <button
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+                className={`px-5 py-2 mr-4 bg-rose-600 text-neutral-200 rounded-s-full ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Previous
+              </button>
+
+              {/* Show page numbers */}
+              <div className='flex items-center mx-4'>
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setPage(index + 1)}
+                    className={`px-4 py-2 mx-1 bg-rose-600 text-neutral-200 rounded-md ${page === index + 1 ? 'bg-rose-800' : ''}`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+                className={`px-8 py-2 mx-4 bg-rose-600 text-neutral-200 rounded-e-full ${page === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </>
       ) : (
         <div className='flex items-center justify-center min-h-[calc(100vh-300px)]'>

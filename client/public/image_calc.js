@@ -69,7 +69,7 @@ const usedImages = [
     "https://i.ibb.co.com/ZVKcJC4/connor-miller-s-YUpdy-DVZE-unsplash.jpg",
     "https://i.ibb.co.com/rc3YFDn/artiom-vallat-k-Y-7t-ROuc7-I-unsplash.jpg",
     "https://i.ibb.co.com/2cvcpVX/alexandre-chambon-aap-Semzfs-Ok-unsplash.jpg",
-  ]
+];
 
   // Find unused images
 const unusedImages = allImages.filter(img => !usedImages.includes(img));

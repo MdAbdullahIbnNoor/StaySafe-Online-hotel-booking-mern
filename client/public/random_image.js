@@ -1,0 +1,789 @@
+// Sample dataset (replace this with your actual dataset)
+let dataset = [
+    {
+        "_id": "66f2bf610b76774a7079ef8b",
+        "location": "Miami, USA",
+        "category": "Beach",
+        "title": "Beachfront Paradise with Stunning Views",
+        "to": "2024-07-01T18:00:00.000Z",
+        "from": "2024-06-25T18:00:00.000Z",
+        "price": 400,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Oliver Ragfelt",
+            "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+            "email": "oliver.ragfelt@mail.com"
+        },
+        "description": "This property is close to the beach! Perfect for a summer vacation.",
+        "image": "https://i.ibb.co.com/n892c4Q/zoshua-colah-h-KREK9t-FA0-M-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef8c",
+        "location": "Mykonos, Greece",
+        "category": "Windmills",
+        "title": "Traditional Windmill House with Scenic Views",
+        "to": "2024-08-20T18:00:00.000Z",
+        "from": "2024-08-15T18:00:00.000Z",
+        "price": 250,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Christopher Sardegna",
+            "image": "https://i.ibb.co.com/QHtwf7B/christopher-sardegna-CMOa3-H1-SXG0-unsplash.jpg",
+            "email": "christopher.sardegna@mail.com"
+        },
+        "description": "This property has windmills! Stay in a traditional Mykonos windmill with spectacular sea views.",
+        "image": "https://i.ibb.co.com/0CCH40t/valeriia-bugaiova-p-PHge-Hz1uk-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef8d",
+        "location": "Los Angeles, USA",
+        "category": "Modern",
+        "title": "Luxury Modern Villa in the Heart of LA",
+        "to": "2024-09-15T18:00:00.000Z",
+        "from": "2024-09-10T18:00:00.000Z",
+        "price": 500,
+        "guests": 8,
+        "bathrooms": 4,
+        "bedrooms": 4,
+        "host": {
+            "name": "Marwan Ahmed",
+            "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+            "email": "marwan.ahmed@mail.com"
+        },
+        "description": "This property is modern! A luxurious and stylish villa in the heart of Los Angeles.",
+        "image": "https://i.ibb.co.com/F4kXL3B/steven-ungermann-w-E7q-Dv11kio-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef8e",
+        "location": "Tuscany, Italy",
+        "category": "Countryside",
+        "title": "Charming Countryside Retreat in Tuscany",
+        "to": "2024-10-01T18:00:00.000Z",
+        "from": "2024-09-27T18:00:00.000Z",
+        "price": 220,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Erik Lucatero",
+            "image": "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg",
+            "email": "erik.lucatero@mail.com"
+        },
+        "description": "This property is in the countryside! Enjoy a serene retreat in Tuscany's beautiful countryside.",
+        "image": "https://i.ibb.co.com/JmNCNsR/snowy-hotel-rooms.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef8f",
+        "location": "Maldives",
+        "category": "Pools",
+        "title": "Beachfront Villa with Infinity Pool",
+        "to": "2024-12-05T18:00:00.000Z",
+        "from": "2024-12-01T18:00:00.000Z",
+        "price": 600,
+        "guests": 2,
+        "bathrooms": 1,
+        "bedrooms": 1,
+        "host": {
+            "name": "Kunal Goswami",
+            "image": "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg",
+            "email": "kunal.goswami@mail.com"
+        },
+        "description": "This property has a beautiful pool! Experience luxury in the Maldives with your own infinity pool.",
+        "image": "https://i.ibb.co.com/vsTDzYx/sara-dubler-Koei-7y-Yt-Io-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef90",
+        "location": "Bora Bora, French Polynesia",
+        "category": "Islands",
+        "title": "Private Island Bungalow",
+        "to": "2024-11-20T18:00:00.000Z",
+        "from": "2024-11-15T18:00:00.000Z",
+        "price": 800,
+        "guests": 2,
+        "bathrooms": 1,
+        "bedrooms": 1,
+        "host": {
+            "name": "Oliver Ragfelt",
+            "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+            "email": "oliver.ragfelt@mail.com"
+        },
+        "description": "This property is on an island! Stay in a beautiful bungalow on a private island in Bora Bora.",
+        "image": "https://i.ibb.co.com/SR0csHP/runnyrem-Lfqm-ND-hym8-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef91",
+        "location": "Lake Tahoe, USA",
+        "category": "Lake",
+        "title": "Lakeside Cabin with Panoramic Views",
+        "to": "2024-10-10T18:00:00.000Z",
+        "from": "2024-10-05T18:00:00.000Z",
+        "price": 300,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Marwan Ahmed",
+            "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+            "email": "marwan.ahmed@mail.com"
+        },
+        "description": "This property is near a lake! A cozy cabin with breathtaking views of Lake Tahoe.",
+        "image": "https://i.ibb.co.com/qyNyggH/rod-long-2-P-ifaet-Dm0-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef92",
+        "location": "Aspen, USA",
+        "category": "Skiing",
+        "title": "Luxury Ski Lodge with Slope Access",
+        "to": "2024-12-25T18:00:00.000Z",
+        "from": "2024-12-20T18:00:00.000Z",
+        "price": 650,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Erik Lucatero",
+            "image": "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg",
+            "email": "erik.lucatero@mail.com"
+        },
+        "description": "This property has skiing activities! Stay in a luxury ski lodge with direct slope access.",
+        "image": "https://i.ibb.co.com/ysc7XkR/rktkn-ss-Oty-GE8-Cy-E-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef93",
+        "location": "Malibu, USA",
+        "category": "Beach",
+        "title": "Beachfront Paradise Villa",
+        "to": "2024-11-15T18:00:00.000Z",
+        "from": "2024-11-10T18:00:00.000Z",
+        "price": 900,
+        "guests": 8,
+        "bathrooms": 4,
+        "bedrooms": 4,
+        "host": {
+            "name": "Christopher Sardegna",
+            "image": "https://i.ibb.co.com/QHtwf7B/christopher-sardegna-CMOa3-H1-SXG0-unsplash.jpg",
+            "email": "chris.sardegna@mail.com"
+        },
+        "description": "This property is close to the beach! Enjoy stunning ocean views and direct beach access.",
+        "image": "https://i.ibb.co.com/mt3gpph/ylona-maria-rybka-C3-OWai1t-Ua-M-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef94",
+        "location": "Mykonos, Greece",
+        "category": "Modern",
+        "title": "Modern Luxury Villa with Pool",
+        "to": "2024-10-05T18:00:00.000Z",
+        "from": "2024-10-01T18:00:00.000Z",
+        "price": 1200,
+        "guests": 10,
+        "bathrooms": 5,
+        "bedrooms": 5,
+        "host": {
+            "name": "Oliver Ragfelt",
+            "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+            "email": "oliver.ragfelt@mail.com"
+        },
+        "description": "This property is modern! Relax in a luxurious villa with a private pool and modern amenities.",
+        "image": "https://i.ibb.co.com/2cvcpVX/alexandre-chambon-aap-Semzfs-Ok-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef95",
+        "location": "Amsterdam, Netherlands",
+        "category": "Windmills",
+        "title": "Windmill Cottage Retreat",
+        "to": "2024-09-30T18:00:00.000Z",
+        "from": "2024-09-25T18:00:00.000Z",
+        "price": 500,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Marwan Ahmed",
+            "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+            "email": "marwan.ahmed@mail.com"
+        },
+        "description": "This property has windmills! Stay in a beautiful cottage surrounded by historic windmills.",
+        "image": "https://i.ibb.co.com/k9S41t3/toa-heftiba-ccx-FXy-Dtqfg-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef96",
+        "location": "Swiss Alps, Switzerland",
+        "category": "Skiing",
+        "title": "Cozy Chalet with Ski-In/Ski-Out Access",
+        "to": "2025-01-05T18:00:00.000Z",
+        "from": "2024-12-30T18:00:00.000Z",
+        "price": 800,
+        "guests": 7,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Kunal Goswami",
+            "image": "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg",
+            "email": "kunal.goswami@mail.com"
+        },
+        "description": "This property has skiing activities! Enjoy direct access to the slopes from this cozy chalet.",
+        "image": "https://i.ibb.co.com/q0sqQDQ/visit-greenland-3-Jg-QPrr-S1-WU-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef97",
+        "location": "Santorini, Greece",
+        "category": "Islands",
+        "title": "Cliffside Island Villa with Infinity Pool",
+        "to": "2024-08-20T18:00:00.000Z",
+        "from": "2024-08-15T18:00:00.000Z",
+        "price": 1100,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Christopher Sardegna",
+            "image": "https://i.ibb.co.com/QHtwf7B/christopher-sardegna-CMOa3-H1-SXG0-unsplash.jpg",
+            "email": "chris.sardegna@mail.com"
+        },
+        "description": "This property is on an island! Enjoy breathtaking views from this luxurious villa on the cliffs.",
+        "image": "https://i.ibb.co.com/dQRfnxc/david-bayliss-jj-Lu7frn-ITw-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef98",
+        "location": "Kyoto, Japan",
+        "category": "Traditional",
+        "title": "Zen Garden Villa with Tatami Rooms",
+        "to": "2024-11-10T18:00:00.000Z",
+        "from": "2024-11-05T18:00:00.000Z",
+        "price": 550,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Akira Sato",
+            "image": "https://i.ibb.co.com/FzLySZ9/akira-sato-unsplash.jpg",
+            "email": "akira.sato@mail.com"
+        },
+        "description": "This property has traditional Japanese architecture! Relax in a Zen-inspired villa with tatami rooms and a private garden.",
+        "image": "https://i.ibb.co.com/hZVQ3Kn/thepowercouple-c3h-DGTFUB6g-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef99",
+        "location": "Queenstown, New Zealand",
+        "category": "Adventure",
+        "title": "Mountain Lodge with Lake Views",
+        "to": "2024-12-20T18:00:00.000Z",
+        "from": "2024-12-15T18:00:00.000Z",
+        "price": 700,
+        "guests": 5,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Liam O'Connor",
+            "image": "https://i.ibb.co.com/pN0hwZz/liam-oconnor-unsplash.jpg",
+            "email": "liam.oconnor@mail.com"
+        },
+        "description": "This property is perfect for adventurers! Stay in a cozy lodge with stunning mountain and lake views.",
+        "image": "https://i.ibb.co.com/bghQngs/stephen-njau-Oimp-S73x-L3c-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef9a",
+        "location": "Paris, France",
+        "category": "City",
+        "title": "Chic Apartment in the Heart of Paris",
+        "to": "2024-10-30T18:00:00.000Z",
+        "from": "2024-10-25T18:00:00.000Z",
+        "price": 650,
+        "guests": 3,
+        "bathrooms": 1,
+        "bedrooms": 1,
+        "host": {
+            "name": "Amélie Laurent",
+            "image": "https://i.ibb.co.com/Vy6SZFk/amelie-laurent-unsplash.jpg",
+            "email": "amelie.laurent@mail.com"
+        },
+        "description": "This property is in the city center! Enjoy Parisian chic living with easy access to all major attractions.",
+        "image": "https://i.ibb.co.com/Mk3Cq2Z/ryan-loughlin-Ms-By-Qx-62k-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef9b",
+        "location": "Marrakesh, Morocco",
+        "category": "Desert",
+        "title": "Luxury Riad with Private Courtyard",
+        "to": "2024-09-25T18:00:00.000Z",
+        "from": "2024-09-20T18:00:00.000Z",
+        "price": 800,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Youssef El-Maati",
+            "image": "https://i.ibb.co.com/NzLty9M/youssef-elmaati-unsplash.jpg",
+            "email": "youssef.elmaati@mail.com"
+        },
+        "description": "This property has desert vibes! Stay in a luxurious riad with a private courtyard and traditional Moroccan design.",
+        "image": "https://i.ibb.co.com/55BLVRj/rashel-ochoa-mr-BG1z-Wr73-M-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef9c",
+        "location": "Bali, Indonesia",
+        "category": "Tropical",
+        "title": "Secluded Jungle Retreat with Infinity Pool",
+        "to": "2024-12-10T18:00:00.000Z",
+        "from": "2024-12-05T18:00:00.000Z",
+        "price": 750,
+        "guests": 5,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Dewi Kartika",
+            "image": "https://i.ibb.co.com/39cSJTK/dewi-kartika-unsplash.jpg",
+            "email": "dewi.kartika@mail.com"
+        },
+        "description": "This property is in the heart of the jungle! Escape to a secluded villa with an infinity pool and stunning nature views.",
+        "image": "https://i.ibb.co.com/7y915Z9/quynh-do-T7o-MZ5-H4-Zt4-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef9d",
+        "location": "Santorini, Greece",
+        "category": "Beachfront",
+        "title": "Whitewashed Villa with Caldera Views",
+        "to": "2024-10-15T18:00:00.000Z",
+        "from": "2024-10-10T18:00:00.000Z",
+        "price": 900,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Eleni Papadopoulos",
+            "image": "https://i.ibb.co.com/hk7Lyxn/eleni-papadopoulos-unsplash.jpg",
+            "email": "eleni.papadopoulos@mail.com"
+        },
+        "description": "This property has breathtaking views! Stay in a stunning whitewashed villa overlooking the Caldera.",
+        "image": "https://i.ibb.co.com/fMGHvct/nathan-cima-Vv-Eh9-E9zhv0-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef9e",
+        "location": "Lake Como, Italy",
+        "category": "Lakeside",
+        "title": "Elegant Villa with Private Dock",
+        "to": "2024-09-30T18:00:00.000Z",
+        "from": "2024-09-25T18:00:00.000Z",
+        "price": 1200,
+        "guests": 8,
+        "bathrooms": 4,
+        "bedrooms": 4,
+        "host": {
+            "name": "Giovanni Rossi",
+            "image": "https://i.ibb.co.com/Ln78Kbt/giovanni-rossi-unsplash.jpg",
+            "email": "giovanni.rossi@mail.com"
+        },
+        "description": "This property offers lakeside serenity! Stay in a grand villa with a private dock and beautiful lake views.",
+        "image": "https://i.ibb.co.com/dWPPntx/miguel-4-L5l-Nk-Y6e-Ns-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079ef9f",
+        "location": "Reykjavik, Iceland",
+        "category": "Arctic",
+        "title": "Modern Cabin with Northern Lights Views",
+        "to": "2024-12-05T18:00:00.000Z",
+        "from": "2024-12-01T18:00:00.000Z",
+        "price": 850,
+        "guests": 6,
+        "bathrooms": 2,
+        "bedrooms": 3,
+        "host": {
+            "name": "Olafur Björnsson",
+            "image": "https://i.ibb.co.com/Tzy3dkJ/olafur-bjornsson-unsplash.jpg",
+            "email": "olafur.bjornsson@mail.com"
+        },
+        "description": "This property offers spectacular views of the Northern Lights! Stay in a modern cabin with large windows perfect for Arctic viewing.",
+        "image": "https://i.ibb.co.com/NTYsWnp/mauro-lima-tsmc4mve3-Lc-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079efa0",
+        "location": "Dubai, UAE",
+        "category": "Urban Luxury",
+        "title": "Penthouse Suite with Skyline Views",
+        "to": "2024-11-20T18:00:00.000Z",
+        "from": "2024-11-15T18:00:00.000Z",
+        "price": 1800,
+        "guests": 5,
+        "bathrooms": 3,
+        "bedrooms": 2,
+        "host": {
+            "name": "Aisha Al-Farsi",
+            "image": "https://i.ibb.co.com/J2q73kL/aisha-alfarsi-unsplash.jpg",
+            "email": "aisha.alfarsi@mail.com"
+        },
+        "description": "This property is the epitome of luxury! Stay in a penthouse suite with expansive views of Dubai's iconic skyline.",
+        "image": "https://i.ibb.co.com/J5HTwXF/matheen-faiz-Qoll8-RMSRy-Q-unsplash.jpg"
+    },
+    {
+        "_id": "66f2bf610b76774a7079efa1",
+        "location": "Aspen, USA",
+        "category": "Skiing",
+        "title": "Rustic Mountain Lodge with Slope Access",
+        "to": "2024-12-15T18:00:00.000Z",
+        "from": "2024-12-10T18:00:00.000Z",
+        "price": 950,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Emily Carter",
+            "image": "https://i.ibb.co.com/WLhzYZF/emily-carter-unsplash.jpg",
+            "email": "emily.carter@mail.com"
+        },
+        "description": "This property is a skier's dream! Enjoy rustic luxury with direct slope access in the heart of the mountains.",
+        "image": "https://i.ibb.co.com/2FvzJcN/martin-robles-Qt-Hz-R4-CN1k-Q-unsplash.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd32",
+        "location": "London, UK",
+        "category": "Castles",
+        "title": "Historic Castle in the Heart of London",
+        "to": "2024-12-15T18:00:00.000Z",
+        "from": "2024-12-10T18:00:00.000Z",
+        "price": 1200,
+        "guests": 10,
+        "bathrooms": 4,
+        "bedrooms": 5,
+        "host": {
+            "name": "Oliver King",
+            "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+            "email": "oliver.king@mail.com"
+        },
+        "description": "Stay in a magnificent castle with breathtaking views and royal history. Enjoy grand rooms and a vast private garden.",
+        "image": "https://i.ibb.co.com/R62qpTX/john-cameron-RKgd-Ou-Nz-Y0-unsplash.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd33",
+        "location": "Barcelona, Spain",
+        "category": "Modern",
+        "title": "Luxury Apartment in the City Center",
+        "to": "2024-10-10T18:00:00.000Z",
+        "from": "2024-10-05T18:00:00.000Z",
+        "price": 450,
+        "guests": 2,
+        "bathrooms": 1,
+        "bedrooms": 1,
+        "host": {
+            "name": "Carlos Ruiz",
+            "image": "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg",
+            "email": "carlos.ruiz@mail.com"
+        },
+        "description": "A modern apartment with a chic design in the heart of Barcelona. Perfect for a city getaway.",
+        "image": "https://i.ibb.co.com/7y915Z9/quynh-do-T7o-MZ5-H4-Zt4-unsplash.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd34",
+        "location": "Maui, Hawaii",
+        "category": "Beach",
+        "title": "Oceanfront Villa with Private Beach",
+        "to": "2024-09-30T18:00:00.000Z",
+        "from": "2024-09-25T18:00:00.000Z",
+        "price": 800,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Leilani Kai",
+            "image": "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg",
+            "email": "leilani.kai@mail.com"
+        },
+        "description": "A serene oceanfront villa with access to a private beach. Perfect for families looking to relax by the water.",
+        "image": "https://i.ibb.co.com/1XDFb7P/hotel-with-swimmingpool.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd35",
+        "location": "Tuscany, Italy",
+        "category": "Countryside",
+        "title": "Rustic Farmhouse in the Tuscan Hills",
+        "to": "2024-10-20T18:00:00.000Z",
+        "from": "2024-10-15T18:00:00.000Z",
+        "price": 500,
+        "guests": 5,
+        "bathrooms": 2,
+        "bedrooms": 3,
+        "host": {
+            "name": "Giovanni Rossi",
+            "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+            "email": "giovanni.rossi@mail.com"
+        },
+        "description": "Stay in a traditional farmhouse surrounded by vineyards and olive trees. A perfect escape to the countryside.",
+        "image": "https://i.ibb.co.com/g3RW592/orva-studio-YC8qqp50-Bd-A-unsplash.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd36",
+        "location": "Aspen, USA",
+        "category": "Skiing",
+        "title": "Ski Chalet with Mountain Views",
+        "to": "2024-12-05T18:00:00.000Z",
+        "from": "2024-12-01T18:00:00.000Z",
+        "price": 700,
+        "guests": 8,
+        "bathrooms": 3,
+        "bedrooms": 4,
+        "host": {
+            "name": "Jake Winters",
+            "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+            "email": "jake.winters@mail.com"
+        },
+        "description": "Luxury ski chalet located in the heart of Aspen with panoramic mountain views. Ski-in and ski-out access.",
+        "image": "https://i.ibb.co.com/fXqg1gZ/hotel-room3.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd37",
+        "location": "Kyoto, Japan",
+        "category": "Traditional",
+        "title": "Zen Garden Villa with Tatami Rooms",
+        "to": "2024-11-10T18:00:00.000Z",
+        "from": "2024-11-05T18:00:00.000Z",
+        "price": 550,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Akira Sato",
+            "image": "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg",
+            "email": "akira.sato@mail.com"
+        },
+        "description": "This property has traditional Japanese architecture! Relax in a Zen-inspired villa with tatami rooms and a private garden.",
+        "image": "https://i.ibb.co.com/hZVQ3Kn/thepowercouple-c3h-DGTFUB6g-unsplash.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd38",
+        "location": "Banff, Canada",
+        "category": "Arctic",
+        "title": "Snowy Cabin in the Rocky Mountains",
+        "to": "2024-01-10T18:00:00.000Z",
+        "from": "2024-01-05T18:00:00.000Z",
+        "price": 600,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "Liam Carter",
+            "image": "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg",
+            "email": "liam.carter@mail.com"
+        },
+        "description": "Cozy cabin in the Canadian Rockies with a fireplace and snowy views. Perfect for a winter getaway.",
+        "image": "https://i.ibb.co.com/LSDtQHz/arctic-hotel-image.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd39",
+        "location": "Grand Canyon, USA",
+        "category": "Caves",
+        "title": "Underground Cave Suite",
+        "to": "2024-11-25T18:00:00.000Z",
+        "from": "2024-11-20T18:00:00.000Z",
+        "price": 500,
+        "guests": 4,
+        "bathrooms": 1,
+        "bedrooms": 2,
+        "host": {
+            "name": "Mason Turner",
+            "image": "https://i.ibb.co.com/QHtwf7B/christopher-sardegna-CMOa3-H1-SXG0-unsplash.jpg",
+            "email": "mason.turner@mail.com"
+        },
+        "description": "Unique cave suite carved into the rocks of the Grand Canyon. Experience a one-of-a-kind stay underground.",
+        "image": "https://i.ibb.co.com/bghQngs/stephen-njau-Oimp-S73x-L3c-unsplash.jpg"
+    },
+    {
+        "_id": "66f43f0c0b76774a70b5cd3a",
+        "location": "Joshua Tree, USA",
+        "category": "Camping",
+        "title": "Luxury Camping in the Desert",
+        "to": "2024-11-30T18:00:00.000Z",
+        "from": "2024-11-25T18:00:00.000Z",
+        "price": 400,
+        "guests": 3,
+        "bathrooms": 1,
+        "bedrooms": 1,
+        "host": {
+            "name": "Sophie West",
+            "image": "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg",
+            "email": "sophie.west@mail.com"
+        },
+        "description": "Enjoy a luxury camping experience in the beautiful Joshua Tree desert. Perfect for stargazing and nature walks.",
+        "image": "https://i.ibb.co.com/8gtfs6D/fransiskus-filbert-mangundap-l8-OKl-H71-Xh0-unsplash.jpg"
+    },
+    {
+        "_id": "66f450e40b76774a7014f7dd",
+        "location": "Bali, Indonesia",
+        "category": "Island",
+        "title": "Beachfront Villa with Infinity Pool",
+        "to": "2024-12-20T18:00:00.000Z",
+        "from": "2024-12-15T18:00:00.000Z",
+        "price": 900,
+        "guests": 8,
+        "bathrooms": 4,
+        "bedrooms": 5,
+        "host": {
+            "name": "Putri Santoso",
+            "image": "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg",
+            "email": "putri.santoso@mail.com"
+        },
+        "description": "Luxury beachfront villa with a private infinity pool overlooking the ocean. Perfect for large groups or families.",
+        "image": "https://i.ibb.co.com/sZVY8k6/modern-hotel1.jpg"
+    },
+    {
+        "_id": "66f454310b76774a7026d050",
+        "location": "Beverly Hills, USA",
+        "category": "Lux",
+        "title": "Hollywood Luxury Mansion",
+        "to": "2024-12-30T18:00:00.000Z",
+        "from": "2024-12-25T18:00:00.000Z",
+        "price": 5000,
+        "guests": 10,
+        "bathrooms": 6,
+        "bedrooms": 5,
+        "host": {
+            "name": "Jessica Williams",
+            "image": "https://i.ibb.co.com/ZzHzTVF/new-woman.jpg",
+            "email": "jessica.williams@mail.com"
+        },
+        "description": "Indulge in a Hollywood-style mansion in the heart of Beverly Hills. This property boasts a private pool, gym, and luxurious interiors perfect for celebrities.",
+        "image": "https://i.ibb.co.com/mXh1JdV/luxury-mansion.jpg"
+    },
+    {
+        "_id": "66f454310b76774a7026d051",
+        "location": "Monaco, Monte Carlo",
+        "category": "Lux",
+        "title": "Sea View Luxury Hotel Suite",
+        "to": "2024-11-20T18:00:00.000Z",
+        "from": "2024-11-15T18:00:00.000Z",
+        "price": 4500,
+        "guests": 4,
+        "bathrooms": 2,
+        "bedrooms": 2,
+        "host": {
+            "name": "Daniel Martinez",
+            "image": "https://i.ibb.co.com/FbdyHNP/new-man2.jpg",
+            "email": "daniel.martinez@mail.com"
+        },
+        "description": "A luxury suite in Monte Carlo with stunning sea views and modern amenities. Enjoy the best of Monaco with access to a private beach and 5-star service.",
+        "image": "https://i.ibb.co.com/ZBryZPv/luxury-hotel.jpg"
+    },
+    {
+        "_id": "66f454310b76774a7026d052",
+        "location": "Los Angeles, USA",
+        "category": "Lux",
+        "title": "Private Luxury Home with Pool",
+        "to": "2024-10-31T18:00:00.000Z",
+        "from": "2024-10-25T18:00:00.000Z",
+        "price": 4200,
+        "guests": 6,
+        "bathrooms": 3,
+        "bedrooms": 3,
+        "host": {
+            "name": "James Thompson",
+            "image": "https://i.ibb.co.com/RYpzTf4/new-man.jpg",
+            "email": "james.thompson@mail.com"
+        },
+        "description": "Luxury private home in Los Angeles with a large outdoor pool and modern interiors. The perfect spot for a high-end vacation or private retreat.",
+        "image": "https://i.ibb.co.com/XF01nvP/luxury-home.jpg"
+    },
+    {
+        "_id": "66fa6f37d0addbc0e63f0cc4",
+        "location": "Rajshahi, Bangladesh",
+        "category": "Barns",
+        "title": "Amazing View with Fabulous Environment",
+        "to": "2024-09-20T18:00:00.000Z",
+        "from": "2024-09-16T18:00:00.000Z",
+        "price": "200",
+        "bathrooms": "2",
+        "description": "To enjoy the perfect time with your loved ones book now and you won't be disappointed.",
+        "bedrooms": "3",
+        "image": "https://i.ibb.co/yf5gh4C/jpg-42-copy.jpg",
+        "host": {
+            "name": "Md. Noor",
+            "image": "https://i.ibb.co/2ySzWp9/451163376-869359978553316-6993442410080239384-n.jpg",
+            "email": "abc@mail.com"
+        },
+        "guests": "2"
+    },
+    {
+        "_id": "66fa9e6dd0addbc0e63f0cc5",
+        "location": "Beverly Hills, Los Angeles, USA",
+        "category": "Lux",
+        "title": "Luxury Mansion",
+        "to": "2024-10-03T18:00:00.000Z",
+        "from": "2024-09-30T18:00:00.000Z",
+        "price": "220",
+        "guests": "3",
+        "bathrooms": "3",
+        "description": "This luxurious Beverly Hills mansion offers a breathtaking experience with modern amenities, spectacular views, and elegant interior design. The perfect escape for families or groups who want to enjoy a lavish vacation in the heart of Los Angeles.",
+        "bedrooms": "5",
+        "image": "https://i.ibb.co/56wPBLr/hotel-img.jpg",
+        "host": {
+            "name": "Md. Noor",
+            "image": "https://i.ibb.co/2ySzWp9/451163376-869359978553316-6993442410080239384-n.jpg",
+            "email": "abc@mail.com"
+        }
+    }
+]
+
+// Define the 8 unique hosts with name, email, and image
+const hosts = [
+    {
+        name: "Oliver King",
+        email: "oliver.king@mail.com",
+        image: "https://i.ibb.co.com/JzCmTqc/oliver-ragfelt-kh-V4f-Ty6-D8-unsplash.jpg"
+    },
+    {
+        name: "Marwan Ahmed",
+        email: "marwan.ahmed@mail.com",
+        image: "https://i.ibb.co.com/Lz9M8Zk/marwan-ahmed-m-Vnufl3w-B7-M-unsplash.jpg"
+    },
+    {
+        name: "Kunal Goswami",
+        email: "kunal.goswami@mail.com",
+        image: "https://i.ibb.co.com/72yPXs0/kunal-goswami-r-Gs3-RCIctx-Q-unsplash.jpg"
+    },
+    {
+        name: "Erik Lucatero",
+        email: "erik.lucatero@mail.com",
+        image: "https://i.ibb.co.com/q9sGCSN/erik-lucatero-d2-MSDuj-Jl2g-unsplash.jpg"
+    },
+    {
+        name: "Christopher Sardegna",
+        email: "christopher.sardegna@mail.com",
+        image: "https://i.ibb.co.com/QHtwf7B/christopher-sardegna-CMOa3-H1-SXG0-unsplash.jpg"
+    },
+    {
+        name: "Md. Abdullah Ibn Noor",
+        email: "abdullah.pust04@gmail.com",
+        image: "https://i.ibb.co.com/ds98P3n/photo-2024-01-23-15-22-39.jpg"
+    },
+    {
+        name: "James Thompson",
+        email: "james.thompson@mail.com",
+        image: "https://i.ibb.co.com/RYpzTf4/new-man.jpg"
+    },
+    {
+        name: "Daniel Martinez",
+        email: "daniel.martinez@mail.com",
+        image: "https://i.ibb.co.com/FbdyHNP/new-man2.jpg"
+    }
+];
+
+// Function to assign one of the 8 hosts randomly to each entry in the dataset
+function updateHosts(dataset, hosts) {
+    for (let i = 0; i < dataset.length; i++) {
+      // Assign one of the 8 hosts to the current listing
+      let randomHost = hosts[i % hosts.length]; // This will cycle through the 8 hosts
+      dataset[i].host = randomHost;
+  
+      // Remove _id if it exists in the dataset entry
+      if (dataset[i]._id) {
+        delete dataset[i]._id;
+      }
+    }
+  }
+
+// Update the dataset
+updateHosts(dataset, hosts);
+
+// Now `dataset` has the updated host data
+console.log(dataset);
