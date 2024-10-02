@@ -41,7 +41,6 @@ const Navbar = () => {
       role: 'guest',
       status: 'Requested',
     }
-
     // const { data } = await axiosSecure.put(
     //   `${import.meta.env.VITE_API_URL}/user`, currentUser
     // )
