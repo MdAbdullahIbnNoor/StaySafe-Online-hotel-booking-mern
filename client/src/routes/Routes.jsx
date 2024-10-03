@@ -12,6 +12,8 @@ import AddRoom from '../pages/Dashboard/Host/AddRoom'
 import MyListings from '../pages/Dashboard/Host/MyListings'
 import Profile from '../pages/Dashboard/Common/Profile'
 import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
+import AdminRoutes from './AdminRoutes'
+import HostRoutes from './HostRoutes'
 
 export const router = createBrowserRouter([
   {
@@ -25,9 +27,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/room/:id',
-        element: <PrivateRoute>
-          <RoomDetails />
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <RoomDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -35,27 +39,57 @@ export const router = createBrowserRouter([
   { path: '/signup', element: <SignUp /> },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
-        element: <PrivateRoute><Statistics /></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'add-room',
-        element: <PrivateRoute><AddRoom /></PrivateRoute>
-      },
-      {
-        path: 'my-listings',
-        element: <PrivateRoute><MyListings /></PrivateRoute>
-      },
-      {
-        path: 'profile',
-        element: <Profile />
+        element: (
+          <PrivateRoute>
+            <HostRoutes>
+              <AddRoom />
+            </HostRoutes>
+          </PrivateRoute>
+        ),
       },
       {
         path: 'manage-users',
-        element: <ManageUsers />
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <ManageUsers />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'my-listings',
+        element: (
+          <PrivateRoute>
+            <HostRoutes>
+              <MyListings />
+            </HostRoutes>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
     ],
   },

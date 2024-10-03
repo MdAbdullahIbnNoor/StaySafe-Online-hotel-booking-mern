@@ -92,7 +92,7 @@ const Sidebar = () => {
                 icon={BsGraphUp}
               />
 
-              {/* <NavLink
+              {/* <NavLink-
                 to='/dashboard'
                 end
                 className={({ isActive }) =>
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 <BsGraphUp className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>Statistics</span>
-              </NavLink> */}
+              </NavLink-> */}
 
               {role === 'guest' && <GuestMenu />}
               {
