@@ -3,8 +3,12 @@ import Button from '../Shared/Button/Button'
 import { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import { differenceInCalendarDays } from 'date-fns';
+import useAuth from '../../hooks/useAuth'
+import BookingModal from '../Modals/BookingModal';
 
 const RoomReservation = ({ room }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const { user } = useAuth()
   const [state, setState] = useState([
     {
       startDate: new Date(room.from),
@@ -13,11 +17,27 @@ const RoomReservation = ({ room }) => {
     }
   ]);
 
+  // handle close booking modal
+  const closeModal = () => {
+    setIsOpen(false)
+  }
+
   // total price = total days * price
   const total_price = parseInt(
     differenceInCalendarDays(new Date(room.to), new Date(room.from))
   ) * room?.price
   // console.log(total_price);
+
+  const bookingInfo = {
+    ...room,
+    guest: {
+      name: user?.displayName,
+      email: user?.email,
+      image: user?.photoURL
+    }, 
+    price: total_price
+  }
+
 
   return (
     <div className='rounded-xl border-[1px] border-neutral-200 overflow-hidden bg-white'>
@@ -44,7 +64,8 @@ const RoomReservation = ({ room }) => {
       </div>
       <hr />
       <div className='p-4'>
-        <Button label={'Reserve'} />
+        <Button onClick={() => setIsOpen(true)} label={'Reserve'} />
+        <BookingModal closeModal={closeModal} isOpen={isOpen} bookingInfo={bookingInfo}/>
       </div>
       <hr />
       <div className='p-4 flex items-center justify-between font-semibold text-lg'>

@@ -64,17 +64,17 @@ const Profile = () => {
                     <img
                         alt='Cover Image'
                         src='https://wallpapercave.com/wp/wp10784415.jpg'
-                        className='w-full h-40 rounded-t-lg object-cover'
+                        className='w-full h-36 rounded-t-lg object-cover'
                     />
-                    <div className='absolute top-24 left-1/2 transform -translate-x-1/2'>
+                    <div className='absolute top-20 left-1/2 transform -translate-x-1/2'>
                         <img
                             alt='profile'
                             src={user?.photoURL}
-                            className='h-24 w-24 rounded-full border-4 border-white shadow-lg object-cover'
+                            className='w-24 h-24 lg:h-36 lg:w-36 rounded-full border-4 border-rose-400 shadow-lg shadow-gray-600 object-cover'
                         />
                     </div>
                 </div>
-                <div className='mt-16 p-6 text-center'>
+                <div className='mt-24 p-6 text-center'>
                     <h2 className='text-2xl font-semibold text-gray-800 mb-3'>
                         {user?.displayName}
                     </h2>
@@ -82,7 +82,7 @@ const Profile = () => {
                     <p className='text-gray-600 mt-1'>User ID: {user?.uid}</p>
                     <p className='text-gray-600 mt-1'>Email: <span className='font-medium text-rose-600 italic'>{user?.email}</span></p>
 
-                    <div className='flex justify-center mt-6 space-x-4'>
+                    <div className='flex justify-center mt-8 space-x-4'>
                         <button
                             onClick={() => setModalOpen(true)}
                             className='bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-md transition'>

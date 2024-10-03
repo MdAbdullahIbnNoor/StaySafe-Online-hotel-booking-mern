@@ -52,6 +52,63 @@ async function run() {
     const roomsCollection = client.db('staySafe').collection('rooms')
     const usersCollection = client.db('staySafe').collection('users')
 
+    // --------------------------------------Middleware ----------------------------
+
+    // Admin Middleware
+    const verifyAdmin = async (req, res, next) => {
+      const user = req.user
+      const query = { email: user?.email }
+      const result = await usersCollection.findOne(query)
+      if (!result || result?.role !== 'admin')
+        return res.status(401).send({ message: 'unauthorized access' })
+
+      next()
+    }
+
+    // Host Middleware
+    const verifyHost = async (req, res, next) => {
+      const user = req.user
+      const query = { email: user?.email }
+      const result = await usersCollection.findOne(query)
+      if (!result || result?.role !== 'host')
+        return res.status(401).send({ message: 'unauthorized access' })
+
+      next()
+    }
+
+    // ---------------------------------------auth related apis-------------------------------------
+
+
+    // auth related api
+    app.post('/jwt', async (req, res) => {
+      const user = req.body
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '365d',
+      })
+      res
+        .cookie('token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        })
+        .send({ success: true })
+    })
+    // Logout
+    app.get('/logout', async (req, res) => {
+      try {
+        res
+          .clearCookie('token', {
+            maxAge: 0,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+          })
+          .send({ success: true })
+        console.log('Logout successful')
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    })
+
     // ----------------------------------------------------------room related apis--------------------------------------------------------------
 
     // Get all rooms with pagination
@@ -83,13 +140,13 @@ async function run() {
     });
 
 
-    app.get('/all-rooms', async (req, res) => {
+    app.get('/all-rooms', verifyToken, verifyHost, async (req, res) => {
       const result = await roomsCollection.find().toArray()
       res.send(result)
     })
 
     // Save room in DB
-    app.post('/room', async (req, res) => {
+    app.post('/room', verifyToken, verifyHost, async (req, res) => {
       const roomData = req.body
       const result = await roomsCollection.insertOne(roomData)
       res.send(result);
@@ -104,7 +161,7 @@ async function run() {
       res.send(result)
     })
 
-    app.get('/my-listings/:email', async (req, res) => {
+    app.get('/my-listings/:email', verifyToken, verifyHost, async (req, res) => {
       const email = req.params.email
       const query = { 'host.email': email }
       const result = await roomsCollection.find(query).toArray()
@@ -112,7 +169,7 @@ async function run() {
     })
 
     // Delete room with id
-    app.delete('/room/:id', async (req, res) => {
+    app.delete('/room/:id', verifyToken, verifyHost, async (req, res) => {
       const id = req.params.id
       const query = { _id: new ObjectId(id) }
       const result = await roomsCollection.deleteOne(query)
@@ -152,7 +209,7 @@ async function run() {
     })
 
     // get all the users data
-    app.get('/users', async (req, res) => {
+    app.get('/users', verifyToken, verifyAdmin, async (req, res) => {
       const result = await usersCollection.find().toArray()
       res.send(result)
     })
@@ -166,10 +223,10 @@ async function run() {
     })
 
     // update user role
-    app.patch('/users/update/:email', async(req, res)=> {
+    app.patch('/users/update/:email', verifyToken, verifyAdmin, async (req, res) => {
       const email = req.params.email
       const user = req.body
-      const query = {email}
+      const query = { email }
       const updateDoc = {
         $set: {
           ...user,
@@ -180,35 +237,6 @@ async function run() {
       res.send(result)
     })
 
-    // auth related api
-    app.post('/jwt', async (req, res) => {
-      const user = req.body
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '365d',
-      })
-      res
-        .cookie('token', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-        })
-        .send({ success: true })
-    })
-    // Logout
-    app.get('/logout', async (req, res) => {
-      try {
-        res
-          .clearCookie('token', {
-            maxAge: 0,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-          })
-          .send({ success: true })
-        console.log('Logout successful')
-      } catch (err) {
-        res.status(500).send(err)
-      }
-    })
 
     // Send a ping to confirm a successful connection
     await client.db('admin').command({ ping: 1 })
