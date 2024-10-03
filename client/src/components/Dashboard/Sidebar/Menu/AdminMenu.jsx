@@ -1,5 +1,5 @@
 import { FaUserCog } from 'react-icons/fa'
-import MenuItem from './MenuItem'
+import MenuItem from './../Menu/MenuIteam'
 
 const AdminMenu = () => {
   return (

@@ -7,22 +7,29 @@ import { BsGraphUp } from 'react-icons/bs'
 import { NavLink } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import { Link } from 'react-router-dom'
-import { MdHomeWork } from 'react-icons/md'
 import logo from '../../../assets/images/logo.png'
 import useRole from '../../../hooks/useRole'
 import MenuItem from './Menu/MenuIteam'
 import HostMenu from './Menu/HostMenu'
+import AdminMenu from './Menu/AdminMenu'
+import GuestMenu from './Menu/GuestMenu'
+import ToggleBtn from '../../Shared/Button/ToggleBtn'
 
 const Sidebar = () => {
   const { logOut } = useAuth()
   const [isActive, setActive] = useState(false)
   const [role, isLoading] = useRole()
+  const [toggle, setToggle] = useState(true)
 
   // console.log(role, isLoading);
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive)
+  }
+
+  const toggleHandler = () => {
+    setToggle(!toggle)
   }
 
 
@@ -75,7 +82,7 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
             {/* Conditional toggle button here.. */}
-
+            {role === 'host' && <ToggleBtn toggleHandler={toggleHandler} toggle={toggle} />}
             {/*  Menu Items */}
             <nav>
               {/* Statistics */}
@@ -99,7 +106,16 @@ const Sidebar = () => {
                 <span className='mx-4 font-medium'>Statistics</span>
               </NavLink> */}
 
-              {role === 'host' && <HostMenu/>}
+              {role === 'guest' && <GuestMenu />}
+              {
+                role === 'host'
+                  ? toggle
+                    ? <HostMenu />
+                    : <GuestMenu />
+                  : undefined
+              }
+
+              {role === 'admin' && <AdminMenu />}
             </nav>
           </div>
         </div>
@@ -113,7 +129,7 @@ const Sidebar = () => {
             address='/dashboard/profile'
             icon={FcSettings}
           />
-          
+
           <button
             onClick={logOut}
             className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'
