@@ -1,4 +1,4 @@
-# stay-vista-resources
+# stay-safe-project-resources
 
 ### Important Links:
 
