@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const jwt = require('jsonwebtoken')
 const { restart } = require('nodemon')
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const port = process.env.PORT || 8000
 
@@ -23,13 +24,13 @@ app.use(cookieParser())
 // Verify Token Middleware
 const verifyToken = async (req, res, next) => {
   const token = req.cookies?.token
-  console.log(token)
+  // console.log(token)
   if (!token) {
     return res.status(401).send({ message: 'unauthorized access' })
   }
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
-      console.log(err)
+      // console.log(err)
       return res.status(401).send({ message: 'unauthorized access' })
     }
     req.user = decoded
@@ -48,9 +49,10 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-
-    const roomsCollection = client.db('staySafe').collection('rooms')
-    const usersCollection = client.db('staySafe').collection('users')
+    const db = client.db('staySafe')
+    const roomsCollection = db.collection('rooms')
+    const usersCollection = db.collection('users')
+    const bookingsCollection = db.collection('bookings')
 
     // --------------------------------------Middleware ----------------------------
 
@@ -75,6 +77,28 @@ async function run() {
 
       next()
     }
+
+    // --------------------------------------Payment api ----------------------------------
+
+    // client-payment-intent generate
+    app.post('/create-payment-intent', verifyToken, async (req, res) => {
+      const price = req.body.price
+      const priceInCent = parseFloat(price) * 100
+
+      if (!price || priceInCent < 1) return
+
+      const { client_secret } = await stripe.paymentIntents.create({
+
+        // generate clientSecret
+        amount: priceInCent,
+        currency: "usd",
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      })
+      // send client secret as a response
+      res.send({ clientSecret: client_secret })
+    })
 
     // ---------------------------------------auth related apis-------------------------------------
 
@@ -235,6 +259,41 @@ async function run() {
       }
       const result = await usersCollection.updateOne(query, updateDoc)
       res.send(result)
+    })
+
+    // -------------------------------------bookings related apis-------------------------------------------
+
+    // get all the bookings data
+    app.get('/bookings/:host-email', verifyToken, verifyHost, async (req, res) => {
+      const email = req.params.email
+      const query = { 'host.email': email }
+      const result = await bookingsCollection.find(query).toArray()
+      res.send(result)
+    })
+
+    // get bookings statement by email
+    app.get('/booking/:email', verifyToken, async (req, res) => {
+      const email = req.params.email
+      const query = { 'guest.email': email }
+      const result = await bookingsCollection.find(query).toArray()
+      res.send(result)
+    })
+
+    // post booking data on db
+    app.post('/booking', verifyToken, async (req, res) => {
+      const bookingData = req.body
+      // save booking info
+      const result = await bookingsCollection.insertOne(bookingData)
+
+      // change availability status
+      const roomId = bookingData?.roomId
+      const query = { _id: new ObjectId(roomId) }
+      const updateDoc = {
+        $set: { booked: true },
+      }
+      const updatedRoom = await roomsCollection.updateOne(query, updateDoc)
+      // console.log(updatedRoom);
+      res.send({result, updatedRoom})
     })
 
 

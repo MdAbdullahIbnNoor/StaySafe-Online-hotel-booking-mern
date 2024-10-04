@@ -2,6 +2,10 @@ import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 
 const BookingDataRow = ({ booking, refetch }) => {
+
+  console.log("Booking Data Row -------------", booking);
+
+
   return (
     <tr>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -10,8 +14,8 @@ const BookingDataRow = ({ booking, refetch }) => {
             <div className='block relative'>
               <img
                 alt='profile'
-                src={booking?.image}
-                className='mx-auto object-cover rounded h-10 w-15 '
+                src={booking?.host?.image}
+                className='mx-auto object-contain rounded-full h-10 w-15'
               />
             </div>
           </div>

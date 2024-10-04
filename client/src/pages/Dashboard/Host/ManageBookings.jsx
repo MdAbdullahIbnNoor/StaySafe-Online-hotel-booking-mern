@@ -1,7 +1,27 @@
 import { Helmet } from 'react-helmet-async'
 import BookingDataRow from '../../../components/Dashboard/TableRows/BookingsDataRow'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import useAuth from '../../../hooks/useAuth'
+import { useQuery } from '@tanstack/react-query'
+import LoadingSpinner from '../../../components/Shared/LoadingSpinner'
 
 const ManageBookings = () => {
+  const axiosSecure = useAxiosSecure()
+  const { user } = useAuth()
+
+  const { data: bookings = {}, isLoading, refetch } = useQuery({
+    queryKey: ['bookings'],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/bookings/${user?.email}`)
+      return data
+    }
+  })
+
+
+  console.log(bookings);
+
+  if (isLoading) return <LoadingSpinner />
+
   return (
     <>
       <Helmet>
@@ -54,7 +74,14 @@ const ManageBookings = () => {
                   </tr>
                 </thead>
                 <tbody>
-                    {/* <BookingDataRow /> */}
+                  {bookings.map(booking => (
+                    <BookingDataRow
+                      key={booking._id}
+                      booking={booking}
+                      refetch={refetch}
+                    />
+                  ))
+                  }
                 </tbody>
               </table>
             </div>
