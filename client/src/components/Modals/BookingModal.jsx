@@ -8,6 +8,11 @@ import {
 } from '@headlessui/react'
 import { format } from 'date-fns'
 import { Fragment } from 'react'
+import {loadStripe} from '@stripe/stripe-js';
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from '../Form/CheckoutForm';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
     return (
@@ -71,7 +76,10 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                                     </p>
                                 </div>
                                 <hr className='mt-8 ' />
-                                {/* checkout form */}
+                                <Elements stripe={stripePromise}>
+                                    {/* checkout form */}
+                                    <CheckoutForm/>
+                                </Elements>
                                 <div className='flex mt-2 justify-around'>
                                     <button
                                         onClick={() => {
