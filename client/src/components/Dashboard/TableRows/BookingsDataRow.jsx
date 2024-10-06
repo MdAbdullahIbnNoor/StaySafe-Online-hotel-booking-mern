@@ -1,9 +1,44 @@
+import { useMutation } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
+import { axiosSecure } from '../../../hooks/useAxiosSecure'
+import toast from 'react-hot-toast'
+import { useState } from 'react'
+import DeleteModal from '../../Modals/DeleteModal'
 
 const BookingDataRow = ({ booking, refetch }) => {
 
-  console.log("Booking Data Row -------------", booking);
+  let [isOpen, setIsOpen] = useState(false)
+
+  const closeModal = () => {
+    setIsOpen(false)
+  }
+
+  // console.log("Booking Data Row -------------", booking);
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async id => {
+      const { data } = await axiosSecure.delete(`/booking/${id}`)
+      return data
+    },
+    onSuccess: async () => {
+      await axiosSecure.patch(`/booking/status/${booking?.roomId}`, { status: false })
+      toast.success('Your order has been canceled')
+      refetch()
+    }
+  })
+
+  const handleCancelBtn = async id => {
+
+    try {
+      await mutateAsync(id)
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message)
+    }
+
+  }
+
 
 
   return (
@@ -56,13 +91,20 @@ const BookingDataRow = ({ booking, refetch }) => {
         </p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
+        <button onClick={() => setIsOpen(true)} className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
           <span
             aria-hidden='true'
             className='absolute inset-0 bg-red-200 opacity-50 rounded-full'
           ></span>
           <span className='relative'>Cancel</span>
-        </span>
+        </button>
+        {/* Cancel Modal Button */}
+        <DeleteModal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          handleDelete={handleCancelBtn}
+          id={booking?.roomId}
+        />
       </td>
     </tr>
   )

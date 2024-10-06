@@ -57,7 +57,7 @@ const GuestMenu = () => {
             />
 
             {
-                role !== 'host' &&
+                role === 'guest' &&
                 <button
                     onClick={() => setIsModalOpen(true)}
                     className='flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform text-gray-600  hover:bg-gray-300   hover:text-gray-700 cursor-pointer'>
@@ -68,7 +68,11 @@ const GuestMenu = () => {
             }
 
             {/* Modal for Hosting your Home */}
-            <HostModal isModalOpen={isModalOpen} closeModal={closeModal} handleModal={handleModal} />
+            <HostModal
+                isModalOpen={isModalOpen}
+                closeModal={closeModal}
+                handleModal={handleModal}
+            />
         </>
     )
 }

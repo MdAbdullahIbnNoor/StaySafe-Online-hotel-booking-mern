@@ -164,7 +164,7 @@ async function run() {
     });
 
 
-    app.get('/all-rooms', verifyToken, verifyHost, async (req, res) => {
+    app.get('/all-rooms', async (req, res) => {
       const result = await roomsCollection.find().toArray()
       res.send(result)
     })
@@ -264,7 +264,7 @@ async function run() {
     // -------------------------------------bookings related apis-------------------------------------------
 
     // get all the bookings data
-    app.get('/bookings/:host-email', verifyToken, verifyHost, async (req, res) => {
+    app.get('/manage-bookings/:email', verifyToken, verifyHost, async (req, res) => {
       const email = req.params.email
       const query = { 'host.email': email }
       const result = await bookingsCollection.find(query).toArray()
@@ -272,7 +272,7 @@ async function run() {
     })
 
     // get bookings statement by email
-    app.get('/booking/:email', verifyToken, async (req, res) => {
+    app.get('/my-bookings/:email', verifyToken, async (req, res) => {
       const email = req.params.email
       const query = { 'guest.email': email }
       const result = await bookingsCollection.find(query).toArray()
@@ -284,16 +284,149 @@ async function run() {
       const bookingData = req.body
       // save booking info
       const result = await bookingsCollection.insertOne(bookingData)
+      res.send({ result })
+    })
 
-      // change availability status
-      const roomId = bookingData?.roomId
+    // change the availability status of a room
+    app.patch('/booking/status/:id', verifyToken, async (req, res) => {
+      const roomId = req.params.id
+      const status = req.body.status
       const query = { _id: new ObjectId(roomId) }
+
       const updateDoc = {
-        $set: { booked: true },
+        $set: { booked: status },
       }
-      const updatedRoom = await roomsCollection.updateOne(query, updateDoc)
-      // console.log(updatedRoom);
-      res.send({result, updatedRoom})
+      const result = await roomsCollection.updateOne(query, updateDoc)
+      res.send(result)
+    })
+
+    // delete the booking data from db
+    app.delete('/booking/:roomId', verifyToken, async (req, res) => {
+      const id = req.params.roomId
+      const query = { roomId: id }
+      const result = await bookingsCollection.deleteOne(query)
+      res.send(result)
+    })
+
+    // ------------------------------------------ Statistics related apis-----------------------------------------
+
+    // admin stat
+    app.get('/admin-stat', verifyToken, verifyAdmin, async (req, res) => {
+      const bookingData = await bookingsCollection.find({}, {
+        projection: {
+          date: 1,
+          price: 1,
+        }
+      }).toArray()
+
+      const totalUsers = await usersCollection.countDocuments()
+      const totalRooms = await roomsCollection.countDocuments()
+      const totalSales = await bookingData.reduce((sum, booking) =>
+        sum = sum + booking.price,
+        0
+      )
+
+      const chartData = await bookingData.map(booking => {
+        const day = new Date(booking.date).getDate()
+        const month = new Date(booking.date).getMonth() + 1
+        const data = [`${day}/${month}`, booking?.price]
+        return data
+      })
+
+      // put ['Day', 'Sales'] data on 0 index array of Chart
+      chartData.unshift(['Day', 'Sales']);
+
+      // console.log(bookingData);
+      res.send({
+        totalUsers,
+        totalRooms,
+        totalBookings: bookingData.length,
+        totalSales,
+        chartData,
+      })
+    })
+
+    // host stats
+    app.get('/host-stat/:email', verifyToken, verifyHost, async (req, res) => {
+      const email = req.params.email
+      const query = { 'host.email': email }
+      const query2 = { 'guest.email': email }
+
+      const bookingData = await bookingsCollection.find(query, {
+        projection: {
+          date: 1,
+          price: 1,
+        }
+      }).toArray()
+
+      const { timestamp } = await usersCollection.findOne({ email }, {
+        projection: {
+          timestamp: 1,
+        }
+      })
+
+      const totalSales = await bookingData.reduce((sum, booking) =>
+        sum = sum + booking.price,
+        0
+      )
+      const totalBooking = await bookingsCollection.countDocuments(query2)
+      const totalRooms = await roomsCollection.countDocuments(query)
+
+      const chartData = await bookingData.map(booking => {
+        const day = new Date(booking.date).getDate()
+        const month = new Date(booking.date).getMonth() + 1
+        const data = [`${day}/${month}`, booking?.price]
+        return data
+      })
+      chartData.unshift(['Day', 'Sales']);
+
+      res.send({
+        totalSales,
+        totalBooking,
+        totalRooms,
+        hostSince: timestamp,
+        chartData
+      })
+    })
+
+    // Guest statistics
+    app.get('/guest-stat/:email', async (req, res) => {
+      const email = req.params.email
+      const query = { 'guest.email': email }
+
+      const bookingData = await bookingsCollection.find(query, {
+        projection: {
+          date: 1,
+          price: 1,
+        }
+      }).toArray()
+
+      const { timestamp } = await usersCollection.findOne({ email }, {
+        projection: {
+          timestamp: 1,
+        }
+      })
+
+      const totalSpend = await bookingData.reduce((sum, booking) =>
+        sum = sum + booking.price,
+        0
+      )
+      const totalBooking = await bookingsCollection.countDocuments(query)
+
+      const chartData = await bookingData.map(booking => {
+        const day = new Date(booking.date).getDate()
+        const month = new Date(booking.date).getMonth() + 1
+        const data = [`${day}/${month}`, booking?.price]
+        return data
+      })
+      chartData.unshift(['Day', 'Spend']);
+
+      res.send({
+        totalSpend,
+        totalBooking,
+        hostSince: timestamp,
+        chartData
+      })
     })
 
 

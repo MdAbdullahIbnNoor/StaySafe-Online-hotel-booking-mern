@@ -102,15 +102,20 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
             }
             // delete _id from payment info
             delete paymentInfo._id
-            console.log(paymentInfo);
+            if (paymentInfo.booked) delete paymentInfo.booked
+            // console.log(paymentInfo);
             setProcessing(false)
             closeModal()
 
             // 2. Save payment info in booking collection (db)
-            // 3. Change room status to booked in db
             try {
                 const { data } = await axiosSecure.post(`/booking`, paymentInfo)
                 console.log(data);
+
+                // 3. Change room status to booked in db
+                await axiosSecure.patch(`/booking/status/${bookingInfo._id}`, {
+                    status: true
+                })
                 refetch()
                 closeModal()
                 toast.success('Thank you for booking our room.')

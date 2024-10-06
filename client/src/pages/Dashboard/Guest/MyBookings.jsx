@@ -12,7 +12,7 @@ const MyBookings = () => {
     const { data: bookings = {}, isLoading, refetch } = useQuery({
         queryKey: ['bookings'],
         queryFn: async () => {
-            const { data } = await axiosSecure(`/booking/${user?.email}`)
+            const { data } = await axiosSecure(`/my-bookings/${user?.email}`)
             return data
         }
     })
