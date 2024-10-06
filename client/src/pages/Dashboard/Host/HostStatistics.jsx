@@ -38,10 +38,10 @@ const HostStatistics = () => {
               <FaDollarSign className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm xl:text-base leading-normal font-normal xl:font-semibold text-gray-600'>
                 Total Sales
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-orange-500'>
                 ${stats?.totalSales}
               </h4>
             </div>
@@ -55,10 +55,10 @@ const HostStatistics = () => {
               <BsFillCartPlusFill className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm leading-normal font-normal text-gray-600'>
                 Total Bookings
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-500'>
                 {stats?.totalBooking}
               </h4>
             </div>
@@ -71,10 +71,10 @@ const HostStatistics = () => {
               <BsFillHouseDoorFill className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm leading-normal font-normal text-gray-600'>
                 Total Rooms
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-pink-500'>
                 {stats?.totalBooking}
               </h4>
             </div>
@@ -88,10 +88,10 @@ const HostStatistics = () => {
               <GiPlayerTime className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm leading-normal font-normal text-gray-600'>
                 Host Since...
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-green-500'>
                 {stats?.hostSince && formatDistanceToNow(
                   new Date(stats?.hostSince)
                 )}

@@ -35,10 +35,10 @@ const AdminStatistics = () => {
               <FaDollarSign className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm xl:text-base leading-normal font-normal xl:font-semibold text-gray-600'>
                 Total Sales
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-orange-500'>
                 ${stats?.totalSales}
               </h4>
             </div>
@@ -51,10 +51,10 @@ const AdminStatistics = () => {
               <FaUserAlt className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm leading-normal font-normal text-gray-600'>
                 Total User
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-green-500'>
                 {stats?.totalUsers}
               </h4>
             </div>
@@ -67,10 +67,10 @@ const AdminStatistics = () => {
               <BsFillCartPlusFill className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm leading-normal font-normal text-gray-600'>
                 Total Bookings
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-500'>
                 {stats?.totalBookings}
               </h4>
             </div>
@@ -78,15 +78,15 @@ const AdminStatistics = () => {
           {/* Total Rooms */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md'>
             <div
-              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-pink-600 to-pink-400 text-white shadow-pink-500/40`}
+              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-purple-600 to-purple-400 text-white shadow-purple-500/40`}
             >
               <BsFillHouseDoorFill className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm leading-normal font-normal text-gray-600'>
                 Total Rooms
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-fuchsia-500'>
                 {stats?.totalRooms}
               </h4>
             </div>
@@ -97,7 +97,7 @@ const AdminStatistics = () => {
           {/* Total Sales Graph */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2'>
             {/* Render Chart Here */}
-            <SalesLineChart data={stats?.chartData}/>
+            <SalesLineChart data={stats?.chartData} />
           </div>
           {/* Calender */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden items-center'>

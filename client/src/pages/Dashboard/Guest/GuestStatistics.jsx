@@ -13,7 +13,7 @@ const GuestStatistics = () => {
   const axiosSecure = useAxiosSecure()
   const { user } = useAuth()
 
-  // Fetch Host Stat Data here
+  // Fetch Guest Stat Data hereu+------
   const { data: stats = {}, isLoading } = useQuery({
     queryKey: ['stats'],
     queryFn: async () => {
@@ -38,10 +38,10 @@ const GuestStatistics = () => {
               <FaDollarSign className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm xl:text-base leading-normal font-normal xl:font-semibold text-gray-600'>
                 Total Spent
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-orange-500'>
                 ${stats?.totalSpend}
               </h4>
             </div>
@@ -55,10 +55,10 @@ const GuestStatistics = () => {
               <BsFillCartPlusFill className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm xl:text-base leading-normal font-normal xl:font-semibold text-gray-600'>
                 Total Bookings
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-500'>
                 {stats?.totalBooking}
               </h4>
             </div>
@@ -72,10 +72,10 @@ const GuestStatistics = () => {
               <GiPlayerTime className='w-6 h-6 text-white' />
             </div>
             <div className='p-4 text-right'>
-              <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
+              <p className='block antialiased font-sans text-sm xl:text-base leading-normal font-normal xl:font-semibold text-gray-600'>
                 Guest Since...
               </p>
-              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
+              <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-green-500'>
                 {stats?.hostSince && formatDistanceToNow(
                   new Date(stats?.hostSince)
                 )}
