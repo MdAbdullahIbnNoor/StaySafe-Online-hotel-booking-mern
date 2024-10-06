@@ -76,8 +76,8 @@ const GuestStatistics = () => {
                 Guest Since...
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-green-500'>
-                {stats?.hostSince && formatDistanceToNow(
-                  new Date(stats?.hostSince)
+                {stats?.guestSince && formatDistanceToNow(
+                  new Date(stats?.guestSince)
                 )}
               </h4>
             </div>

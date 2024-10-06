@@ -61,6 +61,7 @@ const RoomDetails = () => {
                   <img
                     className='rounded-full aspect-square max-w-10 h-fit object-cover'
                     alt='Avatar'
+                    referrerPolicy='no-referrer'
                     src={room?.host?.image}
                   />
                 </div>

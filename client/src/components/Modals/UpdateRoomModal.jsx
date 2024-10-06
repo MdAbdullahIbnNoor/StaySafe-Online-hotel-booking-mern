@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import {
   Dialog,
   Transition,
@@ -7,14 +8,89 @@ import {
   DialogTitle,
 } from '@headlessui/react'
 import { Fragment } from 'react'
+import UpdateRoomForm from '../Form/UpdateRoomForm'
+import { imageUpload } from '../../api/utils'
+import useAxiosSecure from '../../hooks/useAxiosSecure'
+import { useMutation } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 
-const UpdateRoomModal = ({ setIsEditModalOpen, isOpen }) => {
+const UpdateRoomModal = ({ setIsUpdateOpen, isUpdateOpen, room, refetch }) => {
+  const axiosSecure = useAxiosSecure()
+  const [loading, setLoading] = useState(false)
+  const [roomData, setRoomData] = useState(room)
+  const [imagePreview, setImagePreview] = useState(room?.image)
+  const [imageText, setImageText] = useState('Upload Image')
+  const [dates, setDates] = useState({
+    startDate: new Date(roomData?.from),
+    endDate: new Date(roomData?.to),
+    key: 'selection'
+  })
+
+  const handleDates = item => {
+    console.log(item);
+    setDates(item.selection)
+  }
+
+  // handle image change
+  const handleImage = async image => {
+    setLoading(true)
+    try {
+      const image_url = await imageUpload(image)
+
+      if (!image_url) {
+        throw new Error('Image upload failed');
+      }
+
+      setRoomData({
+        ...roomData,
+        image: image_url
+      })
+      setImagePreview(URL.createObjectURL(image))
+      setImageText(image.name)
+      setLoading(false)
+    } catch (err) {
+      console.log(err);
+      setLoading(false)
+    }
+  }
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async updateData => {
+      const { data } = await axiosSecure.put(`/room/update/${room?._id}`, updateData)
+      return data
+    },
+    onSuccess: () => {
+      toast.success('Room data updated')
+      setLoading(false)
+      refetch()
+      setIsUpdateOpen(false)
+    }
+  })
+
+  // handle form data input
+  const handleSubmit = async e => {
+    setLoading(true)
+    e.preventDefault()
+    const updatedRoomData = Object.assign({}, roomData)
+    delete updatedRoomData._id
+    console.log(updatedRoomData);
+
+    try {
+      await mutateAsync(updatedRoomData)
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+      setLoading(false)
+    }
+  }
+
+
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition appear show={isUpdateOpen} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-10'
-        onClose={() => setIsEditModalOpen(false)}
+        onClose={() => setIsUpdateOpen(false)}
       >
         <TransitionChild
           as={Fragment}
@@ -46,13 +122,26 @@ const UpdateRoomModal = ({ setIsEditModalOpen, isOpen }) => {
                 >
                   Update Room Info
                 </DialogTitle>
-                <div className='mt-2 w-full'>{/* Update room form */}</div>
+                <div className='mt-2 w-full'>
+                  {/* Update room form */}
+                  <UpdateRoomForm
+                    roomData={roomData}
+                    dates={dates}
+                    loading={loading}
+                    handleDates={handleDates}
+                    imagePreview={imagePreview}
+                    handleImage={handleImage}
+                    imageText={imageText}
+                    handleSubmit={handleSubmit}
+                    setRoomData={setRoomData}
+                  />
+                </div>
                 <hr className='mt-8 ' />
                 <div className='mt-2 '>
                   <button
                     type='button'
                     className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
-                    onClick={() => setIsEditModalOpen(false)}
+                    onClick={() => setIsUpdateOpen(false)}
                   >
                     Cancel
                   </button>
@@ -67,8 +156,8 @@ const UpdateRoomModal = ({ setIsEditModalOpen, isOpen }) => {
 }
 
 UpdateRoomModal.propTypes = {
-  setIsEditModalOpen: PropTypes.func,
-  isOpen: PropTypes.bool,
+  setIsUpdateOpen: PropTypes.func,
+  isUpdateOpen: PropTypes.bool,
 }
 
 export default UpdateRoomModal

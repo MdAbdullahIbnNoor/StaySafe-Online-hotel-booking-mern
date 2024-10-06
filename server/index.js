@@ -163,8 +163,8 @@ async function run() {
       });
     });
 
-
-    app.get('/all-rooms', async (req, res) => {
+    // get all room data 
+    app.get('/all-rooms', verifyToken, verifyAdmin, async (req, res) => {
       const result = await roomsCollection.find().toArray()
       res.send(result)
     })
@@ -197,6 +197,20 @@ async function run() {
       const id = req.params.id
       const query = { _id: new ObjectId(id) }
       const result = await roomsCollection.deleteOne(query)
+      res.send(result)
+    })
+
+    // update room with id
+    app.put('/room/update/:id', verifyToken, verifyHost, async (req, res)=> {
+      const id = req.params.id
+      const roomData = req.body
+      const query = {_id: new ObjectId(id)}
+
+      const updateDoc = {
+        $set: roomData,
+      }
+
+      const result = await roomsCollection.updateOne(query, updateDoc)
       res.send(result)
     })
 
@@ -424,7 +438,7 @@ async function run() {
       res.send({
         totalSpend,
         totalBooking,
-        hostSince: timestamp,
+        guestSince: timestamp,
         chartData
       })
     })
