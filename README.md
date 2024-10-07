@@ -162,21 +162,13 @@ npm install
 
 ## Contributing
 
-We welcome contributions! If you’d like to contribute, follow these steps:
+We welcome contributions! 🎉 If you’d like to contribute, follow these steps:
 
-1. Fork the repository.
-2. Create a new branch: 
-   ```bash
-   git checkout -b feature-branch
-   ```
-3. Make your changes and commit them:
-   ```bash
-   git commit -m 'Add new feature'
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature-branch
-   ```
-5. Create a pull request explaining your changes.
+1. 🍴 **Fork** the repository.
+2. 🌿 **Create a new branch** (e.g., `git checkout -b feature-branch`).
+3. 🛠 **Make your changes** and **commit** them (e.g., `git commit -m 'Add new feature'`).
+4. 🚀 **Push** to the branch (e.g., `git push origin feature-branch`).
+5. 🔄 **Create a pull request** explaining your changes.
+
 
    
