@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000
 
 // middleware
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://staysafe-c5e8f.web.app/'],
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://staysafe-c5e8f.web.app/', 'https://startling-torrone-7d0f42.netlify.app'],
   credentials: true,
   optionSuccessStatus: 200,
 }
