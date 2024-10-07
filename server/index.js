@@ -8,12 +8,13 @@ const jwt = require('jsonwebtoken')
 const { restart } = require('nodemon')
 const nodemailer = require("nodemailer");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const helmet = require('helmet');
 
 const port = process.env.PORT || 8000
 
 // middleware
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://staysafe-c5e8f.web.app/'],
   credentials: true,
   optionSuccessStatus: 200,
 }
@@ -21,6 +22,11 @@ app.use(cors(corsOptions))
 
 app.use(express.json())
 app.use(cookieParser())
+
+// Use the helmet middleware and configure the COOP header
+app.use(helmet({
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
+}));
 
 // ----------------------------------Sending Email Api------------------------------
 const sendEmail = (emailAddress, emailData) => {
@@ -509,10 +515,10 @@ async function run() {
 
 
     // Send a ping to confirm a successful connection
-    await client.db('admin').command({ ping: 1 })
-    console.log(
-      'Pinged your deployment. You successfully connected to MongoDB!'
-    )
+    // await client.db('admin').command({ ping: 1 })
+    // console.log(
+    //   'Pinged your deployment. You successfully connected to MongoDB!'
+    // )
   } finally {
     // Ensures that the client will close when you finish/error
   }
