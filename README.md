@@ -1,8 +1,8 @@
-# StaySafe - Room Rental and Hotel Booking Platform
+# StaySafe - Room Rental and Hotel Booking Platform 🏨✨
 
 A full-stack MERN application that allows users to browse, filter, book, and manage hotel accommodations. The platform serves guests, hosts, and admins with dedicated roles for each. It's built with React, Node.js, Express.js, and MongoDB, providing a seamless experience for property rentals.
 
-## Table of Contents
+## 📑 Table of Contents
 
 1. [Technology Stack](#technology-stack)
 2. [Functionality](#functionality)
@@ -13,7 +13,7 @@ A full-stack MERN application that allows users to browse, filter, book, and man
 
 ---
 
-## Technology Stack
+## 💻 Technology Stack
 
 - **Frontend:** React.js, Tailwind CSS
 - **Backend:** Node.js, Express.js
@@ -25,9 +25,9 @@ A full-stack MERN application that allows users to browse, filter, book, and man
 
 ---
 
-## Functionality
+## ⚙️ Functionality
 
-### Users:
+### 👥 Users:
 
 - **Registration, Login, and Profiles:**
 
@@ -41,42 +41,42 @@ A full-stack MERN application that allows users to browse, filter, book, and man
   - Calendar integration for managing reservations.
   - Profile management and ability to request a host role.
 
-### Hosts:
+### 🏠 Hosts:
 
 - **Host Role:**
   - Guests can request a host role from the admin.
   - Hosts can list properties for rent, including photos, descriptions, amenities, availability, and pricing.
   - Hosts can manage bookings and view statistics via the dashboard.
 
-### Admins:
+### 🔐 Admins:
 
 - **Admin Role:**
   - Admins manage users and roles.
   - View platform-wide statistics and approve guest-to-host role requests.
 
-### Payments and Transactions:
+### 💳 Payments and Transactions:
 
 - Integrated with **Stripe** for secure payment processing.
 
-### Notifications:
+### 📧 Notifications:
 
 - Automated email notifications for booking confirmations, updates, and user actions.
 
-### Technical Highlights:
+### 🚀 Technical Highlights:
 
 - **Responsive Design:** Optimized for desktop, tablet, and mobile views.
 - **Secure:** Data is encrypted, and sensitive credentials are protected using environment variables.
 
 ---
 
-## Live Demo
+## 🌐 Live Demo
 
 - **Backend (Vercel):** [StaySafe Backend](https://staysafe-nine.vercel.app/)
 - **Frontend (Netlify):** [StaySafe Frontend](https://startling-torrone-7d0f42.netlify.app/)
 
 ---
 
-## Packages Used
+## 📦 Packages Used
 
 - [Stripe](https://stripe.com/)
 - [Resend Email](https://resend.com/home)
@@ -98,7 +98,7 @@ A full-stack MERN application that allows users to browse, filter, book, and man
 
 ---
 
-## Installation and Setup
+## 🛠️ Installation and Setup
 
 Follow these instructions to set up the project locally.
 
