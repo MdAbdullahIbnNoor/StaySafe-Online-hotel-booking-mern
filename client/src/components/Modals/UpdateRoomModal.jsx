@@ -29,6 +29,11 @@ const UpdateRoomModal = ({ setIsUpdateOpen, isUpdateOpen, room, refetch }) => {
   const handleDates = item => {
     console.log(item);
     setDates(item.selection)
+    setRoomData({
+      ...roomData, 
+      to: item.selection.endDate, 
+      from: item.selection.startDate
+    })
   }
 
   // handle image change

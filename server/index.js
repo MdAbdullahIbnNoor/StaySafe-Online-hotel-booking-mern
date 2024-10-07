@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const jwt = require('jsonwebtoken')
 const { restart } = require('nodemon')
+const nodemailer = require("nodemailer");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const port = process.env.PORT || 8000
@@ -20,6 +21,48 @@ app.use(cors(corsOptions))
 
 app.use(express.json())
 app.use(cookieParser())
+
+// ----------------------------------Sending Email Api------------------------------
+const sendEmail = (emailAddress, emailData) => {
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for port 465, false for other ports
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  // verify connection configuration
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+
+  const mailBody = {
+    from: `"StaySafe" <${process.env.EMAIL_USER}>`, // sender address
+    to: emailAddress, // list of receivers
+    subject: emailData.subject, // Subject line
+    html: emailData.message, // html body
+  }
+
+  transporter.sendMail(mailBody, (error, info) => {
+    if (error) {
+      console.log(error)
+    } else {
+      console.log("Email Sent: " + info.response);
+    }
+  });
+
+
+}
+
 
 // Verify Token Middleware
 const verifyToken = async (req, res, next) => {
@@ -38,6 +81,7 @@ const verifyToken = async (req, res, next) => {
   })
 }
 
+// Connecting MongoDB
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.hiprwon.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 const client = new MongoClient(uri, {
   serverApi: {
@@ -201,10 +245,10 @@ async function run() {
     })
 
     // update room with id
-    app.put('/room/update/:id', verifyToken, verifyHost, async (req, res)=> {
+    app.put('/room/update/:id', verifyToken, verifyHost, async (req, res) => {
       const id = req.params.id
       const roomData = req.body
-      const query = {_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) }
 
       const updateDoc = {
         $set: roomData,
@@ -243,6 +287,13 @@ async function run() {
         },
       }
       const result = await usersCollection.updateOne(query, updateDoc, options)
+
+      // Send Email to the new User
+      sendEmail(user?.email, {
+        subject: 'Welcome to StaySafe',
+        message: `You have successfully created an account StaySafe. Thank you for joining this journey. Hope you find your destination`,
+      })
+
       res.send(result)
     })
 
@@ -298,6 +349,19 @@ async function run() {
       const bookingData = req.body
       // save booking info
       const result = await bookingsCollection.insertOne(bookingData)
+
+      // send email to guest
+      sendEmail(bookingData?.guest?.email, {
+        subject: 'Booking Successful!',
+        message: `You have successfully booked a room through StaySafe. Your transaction ID: ${bookingData?.transactionId}`,
+      })
+
+      // send email to host
+      sendEmail(bookingData?.host?.email, {
+        subject: 'Your Room got booked',
+        message: `Get Ready to Welcome ${bookingData?.guest?.name}`,
+      })
+
       res.send({ result })
     })
 
